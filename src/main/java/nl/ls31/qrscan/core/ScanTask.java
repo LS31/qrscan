@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.core;
+package nl.ls31.qrscan.core;
 
 import java.awt.Desktop;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.ui;
+package nl.ls31.qrscan;
 
 import java.io.IOException;
 
@@ -11,11 +11,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import nl.lcs.qrscan.ui.model.CreateSettings;
-import nl.lcs.qrscan.ui.model.ManualTagSettings;
-import nl.lcs.qrscan.ui.model.ScanSettings;
-import nl.lcs.qrscan.ui.view.RootController;
-import nl.lcs.qrscan.ui.view.ScanController;
+import nl.ls31.qrscan.ui.model.CreateSettings;
+import nl.ls31.qrscan.ui.model.ManualTagSettings;
+import nl.ls31.qrscan.ui.model.ScanSettings;
+import nl.ls31.qrscan.ui.view.RootController;
+import nl.ls31.qrscan.ui.view.ScanController;
 
 /**
  * Main GUI of QRScan.
@@ -47,7 +47,7 @@ public class App extends Application {
     /**
      * Main application.
      */
-    public MainApp() {
+    public App() {
         this.scanSettings = new ScanSettings();
         this.createSettings = new CreateSettings();
         this.manualTagSettings = new ManualTagSettings();

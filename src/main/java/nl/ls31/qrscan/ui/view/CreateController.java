@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.ui.view;
+package nl.ls31.qrscan.ui.view;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -13,8 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import nl.lcs.qrscan.core.CreateTask;
-import nl.lcs.qrscan.ui.MainApp;
+import nl.ls31.qrscan.core.CreateTask;
+import nl.ls31.qrscan.App;
 
 /**
  * Controller for the dialog where GIF files containing QR codes can be created.
@@ -24,7 +24,7 @@ import nl.lcs.qrscan.ui.MainApp;
  */
 public class CreateController {
 
-	private MainApp mainApp;
+	private App mainApp;
 	@FXML
 	private TextField inputFileTextField;
 	@FXML
@@ -46,7 +46,7 @@ public class CreateController {
 	 * @param mainApp
 	 *            the main application
 	 */
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;
 	}
 

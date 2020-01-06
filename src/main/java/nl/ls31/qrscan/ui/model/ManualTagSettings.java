@@ -1,10 +1,10 @@
-package nl.lcs.qrscan.ui.model;
+package nl.ls31.qrscan.ui.model;
 
 import java.nio.file.Path;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import nl.lcs.qrscan.core.QrPdf;
+import nl.ls31.qrscan.core.QrPdf;
 
 /**
  * This model holds all settings regarding the manual tagging operation.

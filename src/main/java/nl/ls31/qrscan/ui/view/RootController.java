@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.ui.view;
+package nl.ls31.qrscan.ui.view;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import nl.lcs.qrscan.ui.MainApp;
+import nl.ls31.qrscan.App;
 
 /**
  * Controller for some actions in the main window.
@@ -23,7 +23,7 @@ public class RootController {
 
 	@FXML
 	private MenuItem exitItem;
-	private MainApp mainApp;
+	private App mainApp;
 	@FXML
 	private MenuItem aboutItem;
 	@FXML
@@ -37,7 +37,7 @@ public class RootController {
 	 * @param mainApp
 	 *            main application
 	 */
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;
 	}
 

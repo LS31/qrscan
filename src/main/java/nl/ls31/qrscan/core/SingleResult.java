@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.core;
+package nl.ls31.qrscan.core;
 
 import java.io.IOException;
 import java.nio.file.Path;

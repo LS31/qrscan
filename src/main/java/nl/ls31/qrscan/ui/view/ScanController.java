@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.ui.view;
+package nl.ls31.qrscan.ui.view;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -12,11 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import nl.lcs.qrscan.core.RenameTask;
-import nl.lcs.qrscan.core.ScanTask;
-import nl.lcs.qrscan.core.SingleResult;
-import nl.lcs.qrscan.ui.MainApp;
-import nl.lcs.qrscan.ui.model.ScanSettings;
+import nl.ls31.qrscan.core.RenameTask;
+import nl.ls31.qrscan.core.ScanTask;
+import nl.ls31.qrscan.core.SingleResult;
+import nl.ls31.qrscan.App;
+import nl.ls31.qrscan.ui.model.ScanSettings;
 
 /**
  * Controller for the main function of the program: scanning PDF files for QR
@@ -27,7 +27,7 @@ import nl.lcs.qrscan.ui.model.ScanSettings;
  */
 public class ScanController {
 
-	private MainApp mainApp;
+	private App mainApp;
 	@FXML
 	private TextField inputDirTextField;
 	@FXML
@@ -56,7 +56,7 @@ public class ScanController {
 	 * 
 	 * @param mainApp main application
 	 */
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;
 	}
 

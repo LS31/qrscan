@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.ui.view;
+package nl.ls31.qrscan.ui.view;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import nl.lcs.qrscan.core.QrPdf;
-import nl.lcs.qrscan.ui.MainApp;
-import nl.lcs.qrscan.ui.model.ManualTagSettings;
+import nl.ls31.qrscan.core.QrPdf;
+import nl.ls31.qrscan.App;
+import nl.ls31.qrscan.ui.model.ManualTagSettings;
 
 /**
  * Controller for the dialog where an individual PDF file can be tagged
@@ -25,7 +25,7 @@ import nl.lcs.qrscan.ui.model.ManualTagSettings;
  */
 public class ManualTagController {
 
-	private MainApp mainApp;
+	private App mainApp;
 	@FXML
 	private TextField pdfPathField;
 	@FXML
@@ -87,7 +87,7 @@ public class ManualTagController {
 	 * @param mainApp
 	 *            main application
 	 */
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(App mainApp) {
 		this.mainApp = mainApp;
 	}
 

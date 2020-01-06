@@ -1,4 +1,4 @@
-package nl.lcs.qrscan.ui.model;
+package nl.ls31.qrscan.ui.model;
 
 import java.nio.file.Path;
 
