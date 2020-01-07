@@ -89,6 +89,39 @@
                     <launcher>launcher</launcher>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <version>1.0.0.Beta2</version>
+                <executions>
+                    <execution>
+                        <id>add-module-infos</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                            <modules>
+                                <module>
+                                    <artifact>
+                                        <groupId>com.google.zxing</groupId>
+                                        <artifactId>javase</artifactId>
+                                        <version>3.4.0</version>
+                                    </artifact>
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>org.apache.pdfbox</groupId>
+                                        <artifactId>pdfbox</artifactId>
+                                        <version>2.0.18</version>
+                                    </artifact>
+                                </module>
+                            </modules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
