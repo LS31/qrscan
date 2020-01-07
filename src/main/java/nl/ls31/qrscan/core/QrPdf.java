@@ -58,7 +58,6 @@ public class QrPdf {
 		return code.matches("^[\\w\\- ]+");
 	}
 
-	private int numberOfPages;
 	private Path docPath;
 	private Map<Integer, String> qrCodeMap;
 
@@ -94,7 +93,7 @@ public class QrPdf {
 	 */
 	public int getNumberOfPages() throws IOException {
 		PDDocument pdfDoc = PDDocument.load(docPath.toFile());
-		numberOfPages = pdfDoc.getNumberOfPages();
+		int numberOfPages = pdfDoc.getNumberOfPages();
 		pdfDoc.close();
 		return numberOfPages;
 	}
@@ -176,8 +175,8 @@ public class QrPdf {
 	public String getQRCode(int page, boolean useQRCodeFileAttribute, boolean writeFileAttributes)
 			throws IOException, NotFoundException {
 		// Use a stored value in available for speed.
-		if (qrCodeMap.containsKey(new Integer(page))) {
-			return qrCodeMap.get(new Integer(page));
+		if (qrCodeMap.containsKey(page)) {
+			return qrCodeMap.get(page);
 		}
 
 		// Use an available file attribute for speed.
@@ -190,7 +189,7 @@ public class QrPdf {
 		}
 		// No quick solutions, so lets scan!
 		String qrCode = scanQRCode(page);
-		qrCodeMap.put(new Integer(page), qrCode);
+		qrCodeMap.put(page, qrCode);
 
 		if (writeFileAttributes) {
 			// QR code was found through scanning directly, or after the current

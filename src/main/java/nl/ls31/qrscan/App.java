@@ -108,12 +108,10 @@ public class App extends Application {
         this.primaryStage.setTitle("QRScan");
 
         // Load layouts from FXML file.
-        FXMLLoader loader = new FXMLLoader();
-        FXMLLoader scanViewLoader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("view/RootLayout.fxml"));
-        scanViewLoader.setLocation(getClass().getResource("view/ScanView.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/RootLayout.fxml"));
+        FXMLLoader scanViewLoader = new FXMLLoader(App.class.getResource("/fxml/ScanView.fxml"));
         try {
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,7 +123,7 @@ public class App extends Application {
         RootController rootController = loader.getController();
         rootController.setMainApp(this);
         try {
-            AnchorPane scanView = (AnchorPane) scanViewLoader.load();
+            AnchorPane scanView = scanViewLoader.load();
             rootLayout.setCenter(scanView);
 
         } catch (IOException e) {

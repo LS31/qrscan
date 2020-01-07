@@ -15,7 +15,7 @@ import java.util.List;
  * 001_1.pdf and moved to a sub directory 001 in the output directory (i.e.
  * outputDir/001/001.pdf). The suffix '_1' is to avoid collisions with renaming
  * (e.g. two files had the QR code '001'). The next file with QR code '001' will
- * be saved as 001_2.pdf, et cetera, all in the same sub directory /001/.
+ * be saved as 001_2.pdf, etc, all in the same sub directory /001/.
  * </p>
  *
  * <p>
@@ -167,7 +167,7 @@ public class RenameTask extends ScanTask {
 		}
 
 		updateMessage("Summary: tried renaming " + fileCount + " files, " + success + " successful, " + failed
-				+ " unsuccesful, " + noQR + " not attempted (unable to find QR code).");
+				+ " unsuccessful, " + noQR + " not attempted (unable to find QR code).");
 		return scanResults;
 	}
 }

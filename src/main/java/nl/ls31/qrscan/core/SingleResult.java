@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * In a SingleResult, meta data about QRPDFs is stored: i.e. the file name (and,
+ * In a SingleResult, meta data about QR-PDFs is stored: i.e. the file name (and,
  * after renaming the old and new file name), number of pages in the PDF, if a
  * QR code was found, what it was and on which page it was found.
  * 

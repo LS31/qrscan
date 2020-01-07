@@ -160,7 +160,7 @@ public class ScanTask extends Task<List<SingleResult>> {
 		}
 
 		updateMessage(
-				"Summary: scanned " + fileCount + " files: " + success + " successfull, " + failed + " unsuccesful.");
+				"Summary: scanned " + fileCount + " files: " + success + " successful, " + failed + " unsuccessful.");
 		return results;
 	}
 }

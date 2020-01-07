@@ -69,11 +69,8 @@ public class QrImageWriter {
 	 *            width of the QR code. Note: height of the actual GIF will be
 	 *            larger if annotation was requested.
 	 * @return BufferedImage of created QR image
-	 * @throws WriterException
-	 *             if encoding QR code into image failed
 	 */
-	private static BufferedImage createImage(BitMatrix bitMatrix, String qrCode, int width, boolean withAnnotation)
-			throws WriterException {
+	private static BufferedImage createImage(BitMatrix bitMatrix, String qrCode, int width, boolean withAnnotation) {
 		// Add extra height when we want an annotation
 		int height = withAnnotation ? width + 10 : width;
 
@@ -122,7 +119,6 @@ public class QrImageWriter {
 
 		// Encoding the QR code.
 		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		BitMatrix byteMatrix = qrCodeWriter.encode(qrCode, BarcodeFormat.QR_CODE, size, size, hintMap);
-		return byteMatrix;
+		return qrCodeWriter.encode(qrCode, BarcodeFormat.QR_CODE, size, size, hintMap);
 	}
 }

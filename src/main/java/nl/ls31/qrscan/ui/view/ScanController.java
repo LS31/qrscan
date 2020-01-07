@@ -145,7 +145,7 @@ public class ScanController {
 		ScanSettings settings = mainApp.getScanSettings();
 
 		// Spinner has no nice listener, update value first.
-		settings.setQRPage(qrPageSpinner.getValue().intValue());
+		settings.setQRPage(qrPageSpinner.getValue());
 
 		Path inputDir = settings.getInputDirectory();
 		int qrPage = settings.getQRPage();

@@ -16,26 +16,20 @@
          </font></TextArea>
    </bottom>
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#handleExitItem" text="Exit" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Action">
-            <items>
-              <MenuItem fx:id="manualTagItem" mnemonicParsing="false" onAction="#handleManualTagItem" text="Manually add a file attribute..." />
-                  <MenuItem fx:id="createItem" mnemonicParsing="false" onAction="#handleCreateItem" text="Create QR code images..." />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#handleAboutItem" text="About QRScan" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
+       <MenuBar BorderPane.alignment="CENTER">
+           <Menu mnemonicParsing="false" text="File">
+               <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#handleExitItem" text="Exit"/>
+           </Menu>
+           <Menu mnemonicParsing="false" text="Action">
+               <MenuItem fx:id="manualTagItem" mnemonicParsing="false" onAction="#handleManualTagItem"
+                         text="Manually add a file attribute..."/>
+               <MenuItem fx:id="createItem" mnemonicParsing="false" onAction="#handleCreateItem"
+                         text="Create QR code images..."/>
+           </Menu>
+           <Menu mnemonicParsing="false" text="Help">
+               <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#handleAboutItem" text="About QRScan"/>
+           </Menu>
+       </MenuBar>
    </top>
    <center>
   <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="200.0" BorderPane.alignment="CENTER" />

@@ -97,7 +97,7 @@ public class CreateController {
 		Path inputFile = mainApp.getCreateSettings().getInputFile();
 		Path outputDir = mainApp.getCreateSettings().getOutputDirectory();
 		boolean withAnnotation = mainApp.getCreateSettings().getWithAnnotation();
-		mainApp.getCreateSettings().setImageSize(sizeSpinner.getValue().intValue());
+		mainApp.getCreateSettings().setImageSize(sizeSpinner.getValue());
 		int size = mainApp.getCreateSettings().getImageSize();
 		Task<List<Path>> createTask = new CreateTask(inputFile, outputDir, size, withAnnotation);
 		// Messages are passed into the log.

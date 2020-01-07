@@ -58,7 +58,7 @@ public class ScanSettings {
 	 * @return whether to use the custom file attributes
 	 */
 	public final boolean getUseFileAttributes() {
-		return useFileAttributes.getValue().booleanValue();
+		return useFileAttributes.getValue();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class ScanSettings {
 	 * @return whether to rename
 	 */
 	public final boolean getWithRenaming() {
-		return withRenaming.getValue().booleanValue();
+		return withRenaming.getValue();
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class ScanSettings {
 	 * @return whether to write the custom file attributes
 	 */
 	public final boolean getWriteFileAttributes() {
-		return writeFileAttributes.getValue().booleanValue();
+		return writeFileAttributes.getValue();
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class ScanSettings {
 	 *  @return whether to open the file
 	 */
 	public final boolean getOpenLogFile() {
-		return openLogFile.getValue().booleanValue();
+		return openLogFile.getValue();
 	}
 
 	/**
@@ -161,9 +161,9 @@ public class ScanSettings {
 	
 	/**
 	 * Sets whether to open the CSV log file after all operations.
-	 * @param openLogFile
+	 * @param openLogFile whether to open the file
 	 */
 	public final void setOpenLogFile(boolean openLogFile) {
-		this.openLogFile .set(openLogFile);
+		this.openLogFile.set(openLogFile);
 	}
 }

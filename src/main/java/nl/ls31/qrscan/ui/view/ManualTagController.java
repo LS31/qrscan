@@ -99,12 +99,12 @@ public class ManualTagController {
 		QrPdf pdf = new QrPdf(settings.getPDFPath());
 		try {
 			pdf.setQRCodeFileAttribute(settings.getCode());
-			String message = "Succesfully tagged " + settings.getPDFPath().getFileName().toString() + " with code "
+			String message = "Successfully tagged " + settings.getPDFPath().getFileName().toString() + " with code "
 					+ settings.getCode();
 			mainApp.log(message);
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Succesfully tagged");
-			alert.setHeaderText("Tagging succesful.");
+			alert.setTitle("Successfully tagged");
+			alert.setHeaderText("Tagging successful.");
 			alert.setContentText(message);
 			alert.showAndWait();
 			((Stage) tagButton.getScene().getWindow()).close();

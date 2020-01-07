@@ -6,6 +6,6 @@ module qrscan {
     requires org.apache.pdfbox;
     requires com.google.zxing.javase;
 
-    opens nl.ls31.qrscan to javafx.fxml;
+    opens nl.ls31.qrscan.ui.view to javafx.fxml;
     exports nl.ls31.qrscan;
 }

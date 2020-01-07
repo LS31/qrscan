@@ -60,7 +60,7 @@ public class CreateTask extends Task<List<Path>> {
 	 * @return list of created files
 	 */
 	@Override
-	protected List<Path> call() throws Exception {
+	protected List<Path> call() {
 		updateMessage("Creating new images files for QR codes." + LSEP + "  Input file:       "
 				+ inputFile.getFileName().toString() + LSEP + "  Output directory: "
 				+ outputDir.getFileName().toString() + LSEP + "  Size (px):        " + size + LSEP
@@ -107,7 +107,7 @@ public class CreateTask extends Task<List<Path>> {
 		}
 
 		updateMessage("Summary for " + allCodes + " codes: " + LSEP 
-				+ "  Succesful:                     " + success	+ " codes" + LSEP
+				+ "  Successful:                     " + success	+ " codes" + LSEP
 				+ "  Skipped (illegal characters):  " + illegal + " codes" + LSEP
 				+ "  Unable to create image:        " + failed + " codes");
 

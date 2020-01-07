@@ -57,7 +57,7 @@ public class RootController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("About QRScan");
 		alert.setHeaderText("QRScan");
-		alert.setContentText("Version 1.0.1.\r\n" + "A big thanks to the following frameworks: "
+		alert.setContentText("Version 2.0.0.\r\n" + "A big thanks to the following frameworks: "
 				+ "PDFBox by The Apache Software Foundation (Apache license v2.0), "
 				+ "Java ImageIO plugin for JBIG2 (GNU General Public License v3), "
 				+ "Java Advanced Imaging Image I/O Tools API (BSD licence), "
@@ -74,9 +74,8 @@ public class RootController {
 		try {
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			FXMLLoader createViewLoader = new FXMLLoader();
-			createViewLoader.setLocation(getClass().getResource("CreateView.fxml"));
-			AnchorPane createView = (AnchorPane) createViewLoader.load();
+			FXMLLoader createViewLoader = new FXMLLoader(App.class.getResource("/fxml/CreateView.fxml"));
+			AnchorPane createView = createViewLoader.load();
 			stage.setScene(new Scene(createView));
 
 			// Give the controllers access to the main app.
@@ -97,9 +96,8 @@ public class RootController {
 		try {
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
-			FXMLLoader manualTagViewLoader = new FXMLLoader();
-			manualTagViewLoader.setLocation(getClass().getResource("ManualTagView.fxml"));
-			AnchorPane manualTagView = (AnchorPane) manualTagViewLoader.load();
+			FXMLLoader manualTagViewLoader = new FXMLLoader(App.class.getResource("/fxml/ManualTagView.fxml"));
+			AnchorPane manualTagView = manualTagViewLoader.load();
 			stage.setScene(new Scene(manualTagView));
 
 			// Give the controllers access to the main app.
