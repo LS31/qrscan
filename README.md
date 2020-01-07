@@ -7,7 +7,7 @@ If you have a large collection of PDF files of scanned documents, QRScan can hel
 
 The QR codes can be stored as a file attribute (for faster future reference). If automatic QR code recognition fails, you can manually add the file attribute to the PDF file. QRScan can move and rename the PDF files according to their QR code (with sequential numbering appended as a suffix if PDF files share the same QR code). If you provide a text file with codes, QRScan can generate the PNG image files with QR codes for each line, which you can use to incorporate QR codes in your printed documents in the first place.
 
-# Versions
+# Versions 
 1. The provided executable JAR is ready to use. It was made for Java 8. 
 2. All code is being updated to Java 13. However, because dependencies are not yet using "module-info.java", I can't get _jlink_ to create a standalone application at this moment. However, the code does work using the provided _pom.xml_ with _maven_ with the steps below. Any help to get this to work would be great.
   - clean:clean
