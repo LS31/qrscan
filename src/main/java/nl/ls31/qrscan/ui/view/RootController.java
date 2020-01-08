@@ -59,7 +59,6 @@ public class RootController {
 		alert.setHeaderText("QRScan");
 		alert.setContentText("Version 2.0.0.\r\n" + "A big thanks to the following frameworks: "
 				+ "PDFBox by The Apache Software Foundation (Apache license v2.0), "
-				+ "Java ImageIO plugin for JBIG2 (GNU General Public License v3), "
 				+ "Java Advanced Imaging Image I/O Tools API (BSD licence), "
 				+ "ZXing project (Apache license v2.0). ");
 		alert.showAndWait();
