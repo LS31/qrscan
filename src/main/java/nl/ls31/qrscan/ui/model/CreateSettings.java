@@ -13,8 +13,8 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class CreateSettings {
 
-	private SimpleObjectProperty<Path> inputFile = new SimpleObjectProperty<Path>();
-	private SimpleObjectProperty<Path> outputDir = new SimpleObjectProperty<Path>();
+	private SimpleObjectProperty<Path> inputFile = new SimpleObjectProperty<>();
+	private SimpleObjectProperty<Path> outputDir = new SimpleObjectProperty<>();
 	private SimpleIntegerProperty imageSize = new SimpleIntegerProperty(50);
 	private SimpleBooleanProperty withAnnotation = new SimpleBooleanProperty(true);
 
