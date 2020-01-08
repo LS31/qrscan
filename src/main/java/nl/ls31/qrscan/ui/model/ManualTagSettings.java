@@ -13,7 +13,7 @@ import nl.ls31.qrscan.core.QrPdf;
  */
 public class ManualTagSettings {
 
-	private SimpleObjectProperty<Path> pdfPath = new SimpleObjectProperty<Path>();
+	private SimpleObjectProperty<Path> pdfPath = new SimpleObjectProperty<>();
 	private SimpleStringProperty code = new SimpleStringProperty();
 
 	/**

@@ -113,7 +113,7 @@ public class QrImageWriter {
 	 */
 	private static BitMatrix encode(String qrCode, int size) throws WriterException {
 		// Encoding options.
-		Hashtable<EncodeHintType, Object> hintMap = new Hashtable<EncodeHintType, Object>();
+		Hashtable<EncodeHintType, Object> hintMap = new Hashtable<>();
 		hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
 		hintMap.put(EncodeHintType.MARGIN, 1);
 

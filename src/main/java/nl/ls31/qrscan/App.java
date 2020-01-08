@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -39,8 +38,6 @@ public class App extends Application {
     @FXML
     private TextArea logArea;
     private CreateSettings createSettings;
-    @FXML
-    private MenuButton exitButton;
 
     private ManualTagSettings manualTagSettings;
 

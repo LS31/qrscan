@@ -62,7 +62,7 @@
         </center>
         <top>
           <Text strokeType="OUTSIDE" strokeWidth="0.0"
-                text="Create GIF image files for QR codes. Place every QR code on a seperate line in simple text file."
+                text="Create GIF image files for QR codes. Place every QR code on a separate line in simple text file."
                 wrappingWidth="550.0" BorderPane.alignment="TOP_LEFT">
               <font>
                   <Font name="System Italic" size="15.0"/>

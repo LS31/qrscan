@@ -46,27 +46,21 @@ public class CsvLogWriter {
 		StringBuilder csvBuffer = new StringBuilder();
 				
 		// CSV header
-		csvBuffer.append("InputPath" + SEP 
-				+ "RenamedPath" + SEP
-				+ "FileCreated" + SEP 
-				+ "PageCount" + SEP
-				+ "QRCodeFound" + SEP 
-				+ "QRCodePage" + SEP
-				+ "QRcode" + LSEP);
+		csvBuffer.append("InputPath" + SEP + "RenamedPath" + SEP + "FileCreated" + SEP + "PageCount" + SEP + "QRCodeFound" + SEP + "QRCodePage" + SEP + "QRcode").append(LSEP);
 
 		// CSV content: one line for every result
 		for (SingleResult result : results) {
-			csvBuffer.append(QUOTE + result.getInputFilePath().toAbsolutePath().toString() + QUOTE + SEP);
+			csvBuffer.append(QUOTE).append(result.getInputFilePath().toAbsolutePath().toString()).append(QUOTE).append(SEP);
 			if (result.isFileRenamed()) {
-				csvBuffer.append(QUOTE + result.getOutputFilePath().toAbsolutePath().toString() + QUOTE + SEP);
+				csvBuffer.append(QUOTE).append(result.getOutputFilePath().toAbsolutePath().toString()).append(QUOTE).append(SEP);
 			} else {
 				csvBuffer.append(SEP);
 			}
-			csvBuffer.append(QUOTE + result.getFileCreationTime() + QUOTE + SEP);
-			csvBuffer.append(result.getPageCount() + SEP);
-			csvBuffer.append(QUOTE + result.getQrCodeScanStatus().toString() + QUOTE + SEP);
-			csvBuffer.append(result.getQrCodePage() + SEP);
-			csvBuffer.append(QUOTE + result.getQrCode() + QUOTE + LSEP);
+			csvBuffer.append(QUOTE).append(result.getFileCreationTime()).append(QUOTE).append(SEP);
+			csvBuffer.append(result.getPageCount()).append(SEP);
+			csvBuffer.append(QUOTE).append(result.getQrCodeScanStatus().toString()).append(QUOTE).append(SEP);
+			csvBuffer.append(result.getQrCodePage()).append(SEP);
+			csvBuffer.append(QUOTE).append(result.getQrCode()).append(QUOTE).append(LSEP);
 		}
 		
 		return csvBuffer.toString();

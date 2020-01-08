@@ -77,15 +77,15 @@ public class RenameTask extends ScanTask {
 	@Override
 	protected List<SingleResult> call() {
 		List<QrPdf> pdfs = findInputFiles(inputDir);
-		List<SingleResult> results = scanInputFiles(pdfs);
+		List<SingleResult> scanResults = scanInputFiles(pdfs);
 		try {
-			results = renameScanResults(results);
+			List<SingleResult> results = renameScanResults(scanResults);
+			logResults(results, outputDir);
+			return results;
 		} catch (IOException e) {
 			updateMessage("!Unable to create or use output path.");
+			return scanResults;
 		}
-
-		logResults(results, outputDir);
-		return results;
 	}
 
 	/**

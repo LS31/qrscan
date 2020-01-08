@@ -102,16 +102,16 @@ public class ScanTask extends Task<List<SingleResult>> {
 	protected List<QrPdf> findInputFiles(Path inputDir) {
 		List<QrPdf> allFiles = new ArrayList<>();
 
-		SimpleFileVisitor<Path> pdfFileVisitor = new SimpleFileVisitor<Path>() {
-			@Override
-			public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
-				// Convert path to file
-				if (filePath.toString().toLowerCase().endsWith(".pdf")) {
-					allFiles.add(new QrPdf(filePath));
-				}
-				return FileVisitResult.CONTINUE;
-			}
-		};
+		SimpleFileVisitor<Path> pdfFileVisitor = new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
+                // Convert path to file
+                if (filePath.toString().toLowerCase().endsWith(".pdf")) {
+                    allFiles.add(new QrPdf(filePath));
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        };
 
 		try {
 			Files.walkFileTree(inputDir, pdfFileVisitor);

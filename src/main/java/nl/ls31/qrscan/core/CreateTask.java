@@ -85,7 +85,7 @@ public class CreateTask extends Task<List<Path>> {
 		int illegal = 0;
 		final int allCodes = codeList.size();
 
-		List<Path> imageList = new ArrayList<Path>();
+		List<Path> imageList = new ArrayList<>();
 		for (String code : codeList) {
 			updateProgress(++current, allCodes);
 			if (!QrPdf.isValidQRCode(code)) {
@@ -137,9 +137,9 @@ public class CreateTask extends Task<List<Path>> {
 	 * @return code list
 	 */
 	private Set<String> readQRCodesFromFile(Path codeFile) {
-		Set<String> codeList = new HashSet<String>();
+		Set<String> codeList = new HashSet<>();
 		try {
-			codeList.addAll(Files.readAllLines(inputFile));
+			codeList.addAll(Files.readAllLines(codeFile));
 		} catch (IOException e) {
 			updateMessage("!Unable to read code file.");
 		}

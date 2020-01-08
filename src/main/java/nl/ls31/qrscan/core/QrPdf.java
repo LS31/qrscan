@@ -54,7 +54,7 @@ public class QrPdf {
 	 *            code to check
 	 * @return whether the code is a valid QR code
 	 */
-	public final static boolean isValidQRCode(String code) {
+	public static boolean isValidQRCode(String code) {
 		return code.matches("^[\\w\\- ]+");
 	}
 
@@ -69,7 +69,7 @@ public class QrPdf {
 	 */
 	public QrPdf(Path docPath) {
 		this.docPath = docPath;
-		this.qrCodeMap = new HashMap<Integer, String>();
+		this.qrCodeMap = new HashMap<>();
 	}
 
 	/**
@@ -260,9 +260,9 @@ public class QrPdf {
 	 */
 	private String scanQRCode(int pageIndex) throws NotFoundException, IOException {
 		// Hints for scanning
-		Vector<BarcodeFormat> decodeFormat = new Vector<BarcodeFormat>();
+		Vector<BarcodeFormat> decodeFormat = new Vector<>();
 		decodeFormat.add(BarcodeFormat.QR_CODE);
-		Hashtable<DecodeHintType, Object> hintMap = new Hashtable<DecodeHintType, Object>();
+		Hashtable<DecodeHintType, Object> hintMap = new Hashtable<>();
 		hintMap.put(DecodeHintType.TRY_HARDER, true);
 		hintMap.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormat);
 		MultiFormatReader qrcodeReader = new MultiFormatReader();
