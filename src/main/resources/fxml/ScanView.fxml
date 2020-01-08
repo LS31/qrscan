@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="702.0"
+            xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="nl.ls31.qrscan.ui.view.ScanController">
+   <BorderPane layoutX="-38.0" prefHeight="356.0" prefWidth="702.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <center>
+         <GridPane hgap="10.0" maxHeight="-Infinity" prefHeight="265.0" prefWidth="564.0" vgap="10.0"
+                   BorderPane.alignment="TOP_LEFT">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES"/>
+               <ColumnConstraints hgrow="ALWAYS"/>
+               <ColumnConstraints halignment="LEFT" hgrow="NEVER"/>
+            </columnConstraints>
+            <BorderPane.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </BorderPane.margin>
+            <rowConstraints>
+               <RowConstraints/>
+               <RowConstraints/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+               <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+               <RowConstraints/>
+            </rowConstraints>
+            <Label text="Input directory:"/>
+            <Button fx:id="inputDirButton" mnemonicParsing="false" onAction="#handleInputDirButton" prefWidth="150.0"
+                    text="Select directory..." GridPane.columnIndex="2"/>
+            <TextField fx:id="inputDirTextField" editable="false" focusTraversable="false" GridPane.columnIndex="1"/>
+            <Button fx:id="scanButton" mnemonicParsing="false" onAction="#handleScanButton" prefWidth="150.0"
+                    text="Scan" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="15.0"/>
+               </font>
+            </Button>
+            <Label text="QR code at page: " GridPane.rowIndex="1"/>
+            <Spinner fx:id="qrPageSpinner" initialValue="1" max="1000" min="1" GridPane.columnIndex="1"
+                     GridPane.rowIndex="1"/>
+            <Label text="Options:" GridPane.rowIndex="2"/>
+            <CheckBox fx:id="useFileAttributeCheckBox" mnemonicParsing="false" selected="true"
+                      onAction="#handleUseFileAttributeCheckBox"
+                      text="Use QR code from file attribute, if available (faster). " GridPane.columnIndex="1"
+                      GridPane.rowIndex="2">
+               <tooltip>
+                  <Tooltip
+                          text="PDF files are not scanned if QR code is available from the file attribute. Only use this if you trust the file attributes: there is no check if the QR code truly is there in the PDF."/>
+               </tooltip>
+            </CheckBox>
+            <CheckBox fx:id="writeFileAttributeCheckBox" mnemonicParsing="false" selected="true"
+                      onAction="#handleWriteFileAttributeCheckBox"
+                      text="Store QR code as file attribute for future use." GridPane.columnIndex="1"
+                      GridPane.rowIndex="3">
+               <tooltip>
+                  <Tooltip text="This may speed up future scan actions."/>
+               </tooltip>
+            </CheckBox>
+            <CheckBox fx:id="openLogFileCheckBox" mnemonicParsing="false" onAction="#handleOpenLogFileCheckBox"
+                      selected="true" text="Open CSV log file after operations." GridPane.columnIndex="1"
+                      GridPane.rowIndex="4"/>
+            <CheckBox fx:id="renameCheckBox" mnemonicParsing="false" onAction="#handleRenameCheckBox"
+                      text="Move and rename files, based on QR code." GridPane.columnIndex="1"
+                      GridPane.rowIndex="5"/>
+            <Label fx:id="targetDirLabel" disable="true" text="Target directory:" GridPane.rowIndex="6"/>
+            <TextField fx:id="targetDirTextField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            <Button fx:id="targetDirButton" disable="true" mnemonicParsing="false" onAction="#handleTargetDirButton"
+                    prefWidth="150.0" text="Select directory..." GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+         </GridPane>
+      </center>
+      <top>
+         <Text strokeType="OUTSIDE" strokeWidth="0.0"
+               text="QRScan allows you to scan PDF files for QR codes, and optionally, move and rename the file. A CSV file will be created in the input directory (or in the target directory, when renaming)."
+               wrappingWidth="600.0" BorderPane.alignment="TOP_LEFT">
+            <font>
+               <Font name="System Italic" size="12.0"/>
+            </font>
+            <BorderPane.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </BorderPane.margin>
+         </Text>
+      </top>
+   </BorderPane>
+</AnchorPane>
