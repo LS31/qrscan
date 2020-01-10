@@ -23,23 +23,12 @@ import java.io.IOException;
  */
 public class App extends Application {
     final static private String LSEP = System.lineSeparator();
-
-    /**
-     * Starts the application.
-     *
-     * @param args unused
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ScanSettings scanSettings;
     @FXML
     private TextArea logArea;
     private CreateSettings createSettings;
-
     private ManualTagSettings manualTagSettings;
 
     /**
@@ -49,6 +38,15 @@ public class App extends Application {
         this.scanSettings = new ScanSettings();
         this.createSettings = new CreateSettings();
         this.manualTagSettings = new ManualTagSettings();
+    }
+
+    /**
+     * Starts the application.
+     *
+     * @param args unused
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
 
     /**

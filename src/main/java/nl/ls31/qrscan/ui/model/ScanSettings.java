@@ -31,66 +31,21 @@ public class ScanSettings {
     }
 
     /**
-     * Gets the page number where the QR code should be, according to the user.
-     *
-     * @return page number
-     */
-    public final int getQRPage() {
-        return qrPage.get();
-    }
-
-    /**
-     * Gets the target directory path setting. The path may be invalid and the directory may not exist.
-     *
-     * @return target directory path
-     */
-    public final Path getTargetDirectory() {
-        return targetDir.get();
-    }
-
-    /**
-     * Gets whether the custom file attributes should be used to detect the QR code.
-     *
-     * @return whether to use the custom file attributes
-     */
-    public final boolean getUseFileAttributes() {
-        return useFileAttributes.getValue();
-    }
-
-    /**
-     * Gets whether the PDF files should be renamed according to the found QR code.
-     *
-     * @return whether to rename
-     */
-    public final boolean getWithRenaming() {
-        return withRenaming.getValue();
-    }
-
-    /**
-     * Gets whether the custom file attributes should be written when a QR code was detected.
-     *
-     * @return whether to write the custom file attributes
-     */
-    public final boolean getWriteFileAttributes() {
-        return writeFileAttributes.getValue();
-    }
-
-    /**
-     * Gets whether the CSV log file should be opened externally at the end.
-     *
-     * @return whether to open the file
-     */
-    public final boolean getOpenLogFile() {
-        return openLogFile.getValue();
-    }
-
-    /**
      * Sets the input directory path. This does not check the path for validity.
      *
      * @param path input directory path
      */
     public final void setInputDirectory(Path path) {
         this.inputDir.set(path);
+    }
+
+    /**
+     * Gets the page number where the QR code should be, according to the user.
+     *
+     * @return page number
+     */
+    public final int getQRPage() {
+        return qrPage.get();
     }
 
     /**
@@ -107,12 +62,30 @@ public class ScanSettings {
     }
 
     /**
+     * Gets the target directory path setting. The path may be invalid and the directory may not exist.
+     *
+     * @return target directory path
+     */
+    public final Path getTargetDirectory() {
+        return targetDir.get();
+    }
+
+    /**
      * Sets the target directory path. This does not check the path for validity.
      *
      * @param path target directory path
      */
     public final void setTargetDirectory(Path path) {
         this.targetDir.set(path);
+    }
+
+    /**
+     * Gets whether the custom file attributes should be used to detect the QR code.
+     *
+     * @return whether to use the custom file attributes
+     */
+    public final boolean getUseFileAttributes() {
+        return useFileAttributes.getValue();
     }
 
     /**
@@ -125,6 +98,15 @@ public class ScanSettings {
     }
 
     /**
+     * Gets whether the PDF files should be renamed according to the found QR code.
+     *
+     * @return whether to rename
+     */
+    public final boolean getWithRenaming() {
+        return withRenaming.getValue();
+    }
+
+    /**
      * Sets whether the PDF files should be renamed according to the found QR code.
      *
      * @param withRenaming whether to rename
@@ -134,12 +116,30 @@ public class ScanSettings {
     }
 
     /**
+     * Gets whether the custom file attributes should be written when a QR code was detected.
+     *
+     * @return whether to write the custom file attributes
+     */
+    public final boolean getWriteFileAttributes() {
+        return writeFileAttributes.getValue();
+    }
+
+    /**
      * Sets whether the custom file attributes should be written when a QR code was detected.
      *
      * @param writeFileAttributes whether to write the custom file attributes
      */
     public final void setWriteFileAttributes(boolean writeFileAttributes) {
         this.writeFileAttributes.set(writeFileAttributes);
+    }
+
+    /**
+     * Gets whether the CSV log file should be opened externally at the end.
+     *
+     * @return whether to open the file
+     */
+    public final boolean getOpenLogFile() {
+        return openLogFile.getValue();
     }
 
     /**

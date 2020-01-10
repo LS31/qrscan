@@ -17,6 +17,15 @@ public class ManualTagSettings {
     private SimpleStringProperty code = new SimpleStringProperty();
 
     /**
+     * Gets the PDF path. The path may not be valid.
+     *
+     * @return PDF path
+     */
+    public final Path getPDFPath() {
+        return pdfPath.get();
+    }
+
+    /**
      * Sets the PDF path. This does not check the path for validity.
      *
      * @param file PDF path
@@ -26,12 +35,12 @@ public class ManualTagSettings {
     }
 
     /**
-     * Gets the PDF path. The path may not be valid.
+     * Gets the code to use as the custom file attribute.
      *
-     * @return PDF path
+     * @return code
      */
-    public final Path getPDFPath() {
-        return pdfPath.get();
+    public final String getCode() {
+        return code.get();
     }
 
     /**
@@ -46,14 +55,5 @@ public class ManualTagSettings {
         }
 
         this.code.set(code);
-    }
-
-    /**
-     * Gets the code to use as the custom file attribute.
-     *
-     * @return code
-     */
-    public final String getCode() {
-        return code.get();
     }
 }

@@ -28,33 +28,6 @@ public class CreateSettings {
     }
 
     /**
-     * Gets the input file path setting. The path may be invalid and the file may not exist.
-     *
-     * @return input file path
-     */
-    public final Path getInputFile() {
-        return inputFile.get();
-    }
-
-    /**
-     * Gets the output directory setting. The path may be invalid and the directory may not exist.
-     *
-     * @return output directory path
-     */
-    public final Path getOutputDirectory() {
-        return outputDir.get();
-    }
-
-    /**
-     * Gets the setting whether the images should be annotated with human readable text.
-     *
-     * @return whether to add annotation
-     */
-    public final boolean getWithAnnotation() {
-        return withAnnotation.get();
-    }
-
-    /**
      * Sets the image size setting (in px).
      *
      * @param size image size
@@ -68,6 +41,15 @@ public class CreateSettings {
     }
 
     /**
+     * Gets the input file path setting. The path may be invalid and the file may not exist.
+     *
+     * @return input file path
+     */
+    public final Path getInputFile() {
+        return inputFile.get();
+    }
+
+    /**
      * Sets the input file path setting where a text file with requested QR codes can be found. This does not check the
      * validity of the path.
      *
@@ -78,6 +60,15 @@ public class CreateSettings {
     }
 
     /**
+     * Gets the output directory setting. The path may be invalid and the directory may not exist.
+     *
+     * @return output directory path
+     */
+    public final Path getOutputDirectory() {
+        return outputDir.get();
+    }
+
+    /**
      * Sets the output directory path setting, where QR images will be stored. This does not check the validity of the
      * path.
      *
@@ -85,6 +76,15 @@ public class CreateSettings {
      */
     public final void setOutputDirectory(Path directory) {
         outputDir.set(directory);
+    }
+
+    /**
+     * Gets the setting whether the images should be annotated with human readable text.
+     *
+     * @return whether to add annotation
+     */
+    public final boolean getWithAnnotation() {
+        return withAnnotation.get();
     }
 
     /**
