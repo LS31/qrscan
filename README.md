@@ -7,7 +7,7 @@ If you have a large collection of PDF files of scanned documents, QRScan can hel
 
 The QR codes can be stored as a file attribute (for faster future reference). If automatic QR code recognition fails, you can manually add the file attribute to the PDF file. 
 
-To be able to incorporate QR codes in the documents you want to print in the first place, QRScan can generate GIF image files with QR codes if you provide a simple text file with the codes you want to be used (with one code at each line).
+To be able to incorporate QR codes in the documents you want to print in the first place, QRScan can generate GIF image files with QR codes if you provide a simple text file with the codes you want to be used (with one code at each line). See for example this guide on how to use Microsoft Word's mail merge feature to add the images: [Two ways to batch insert multiple images in a Word document via mail merge](https://www.datanumen.com/blogs/2-ways-batch-insert-multiple-pictures-word-document-via-mail-merge/).
 
 We used the QRScan tool to send questionnaires labeled with individual QR codes. For the returned questionnaires, we used QRScan to register and to archive the scanned responses.
 
