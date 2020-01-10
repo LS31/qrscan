@@ -1,5 +1,8 @@
 package nl.ls31.qrscan.core;
 
+import com.google.zxing.WriterException;
+import javafx.concurrent.Task;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,10 +10,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import com.google.zxing.WriterException;
-
-import javafx.concurrent.Task;
 
 /**
  * This task imports creates GIF image files displaying QR codes (with or

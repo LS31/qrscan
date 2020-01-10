@@ -1,6 +1,9 @@
 package nl.ls31.qrscan.core;
 
-import java.awt.Desktop;
+import com.google.zxing.NotFoundException;
+import javafx.concurrent.Task;
+
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -11,10 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import com.google.zxing.NotFoundException;
-
-import javafx.concurrent.Task;
 
 /**
  * In this Task, PDF files in the input directory are scanned recursively (at a

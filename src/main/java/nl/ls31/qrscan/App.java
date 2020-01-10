@@ -1,7 +1,5 @@
 package nl.ls31.qrscan;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +14,8 @@ import nl.ls31.qrscan.ui.model.ScanSettings;
 import nl.ls31.qrscan.ui.view.RootController;
 import nl.ls31.qrscan.ui.view.ScanController;
 
+import java.io.IOException;
+
 /**
  * Main GUI of QRScan.
  *
@@ -23,15 +23,16 @@ import nl.ls31.qrscan.ui.view.ScanController;
  */
 public class App extends Application {
     final static private String LSEP = System.lineSeparator();
+
     /**
      * Starts the application.
      *
-     * @param args
-     *            unused
+     * @param args unused
      */
     public static void main(String[] args) {
         launch(args);
     }
+
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ScanSettings scanSettings;
@@ -87,8 +88,8 @@ public class App extends Application {
     }
 
     /**
-     * Adds a message to the application log. For now, these messages are shown
-     * on a new line in the lower 'logging panel' of the application.
+     * Adds a message to the application log. For now, these messages are shown on a new line in the lower 'logging
+     * panel' of the application.
      *
      * @param message Log message
      */
