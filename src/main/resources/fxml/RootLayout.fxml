@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.ls31.qrscan.ui.view.RootController">
-   <bottom>
-      <TextArea editable="false" maxHeight="1.7976931348623157E308" promptText="Log" wrapText="true" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Courier New" size="15.0" />
-         </font></TextArea>
-   </bottom>
-   <top>
-       <MenuBar BorderPane.alignment="CENTER">
-           <Menu mnemonicParsing="false" text="File">
-               <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#handleExitItem" text="Exit"/>
-           </Menu>
-           <Menu mnemonicParsing="false" text="Action">
-               <MenuItem fx:id="manualTagItem" mnemonicParsing="false" onAction="#handleManualTagItem"
-                         text="Manually add a file attribute..."/>
-               <MenuItem fx:id="createItem" mnemonicParsing="false" onAction="#handleCreateItem"
-                         text="Create QR code images..."/>
-           </Menu>
-           <Menu mnemonicParsing="false" text="Help">
-               <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#handleAboutItem" text="About QRScan"/>
-           </Menu>
-       </MenuBar>
-   </top>
-   <center>
-  <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </center>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.ls31.qrscan.ui.view.RootController">
+    <bottom>
+        <TextArea editable="false" maxHeight="1.7976931348623157E308" promptText="Log" wrapText="true"
+                  BorderPane.alignment="CENTER">
+            <font>
+                <Font name="Courier New" size="12.0"/>
+            </font>
+        </TextArea>
+    </bottom>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="File">
+                <MenuItem fx:id="exitItem" mnemonicParsing="false" onAction="#handleExitItem" text="Exit"/>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Action">
+                <MenuItem fx:id="manualTagItem" mnemonicParsing="false" onAction="#handleManualTagItem"
+                          text="Manually add a file attribute..."/>
+                <MenuItem fx:id="createItem" mnemonicParsing="false" onAction="#handleCreateItem"
+                          text="Create QR code images..."/>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <MenuItem fx:id="aboutItem" mnemonicParsing="false" onAction="#handleAboutItem" text="About QRScan"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <AnchorPane maxHeight="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="200.0"
+                    BorderPane.alignment="CENTER"/>
+    </center>
 </BorderPane>
