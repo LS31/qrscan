@@ -1,5 +1,7 @@
 package nl.ls31.qrscan.core;
 
+import org.tinylog.Logger;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -71,7 +73,7 @@ public class RenameTask extends ScanTask {
             logResults(results, outputDir);
             return results;
         } catch (IOException e) {
-            updateMessage("!Unable to create or use output path.");
+            Logger.error("!Unable to create or use output path.");
             return scanResults;
         }
     }
@@ -118,13 +120,13 @@ public class RenameTask extends ScanTask {
         int failed = 0;
         int noQR = 0;
         int current = 0;
-        updateMessage("Renaming starts now." + LSEP + "  Output directory: " + outputDir.getFileName());
+        Logger.info("Renaming starts now." + LSEP + "  Output directory: " + outputDir.getFileName());
         updateProgress(current, fileCount);
 
         // Create output directory.
         if (!Files.exists(outputDir)) {
             Files.createDirectory(outputDir);
-            updateMessage("Output directory did not exist and has been created.");
+            Logger.error("Output directory did not exist and has been created.");
         }
 
         // Iterate over every scanned file.
@@ -145,13 +147,15 @@ public class RenameTask extends ScanTask {
                 success++;
             } catch (IOException e) {
                 // Exception raised during move.
-                updateMessage("!Unable to rename " + scanResult.getInputFilePath().getFileName() + ".");
+                Logger.error(e, "!Unable to rename " + scanResult.getInputFilePath().getFileName() + ".");
                 failed++;
             }
         }
 
-        updateMessage("Summary: tried renaming " + fileCount + " files, " + success + " successful, " + failed
-                + " unsuccessful, " + noQR + " not attempted (unable to find QR code).");
+        String summaryMessage = "Summary: tried renaming " + fileCount + " files, " + success + " successful, " + failed
+                + " unsuccessful, " + noQR + " not attempted (unable to find QR code).";
+        Logger.info(summaryMessage);
+        updateMessage(summaryMessage);
         return scanResults;
     }
 }

@@ -2,10 +2,8 @@ package nl.ls31.qrscan.ui.view;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -97,8 +95,14 @@ public class CreateController {
         mainApp.getCreateSettings().setImageSize(sizeSpinner.getValue());
         int size = mainApp.getCreateSettings().getImageSize();
         Task<List<Path>> createTask = new CreateTask(inputFile, outputDir, size, withAnnotation);
-        // Messages are passed into the log.
-        createTask.messageProperty().addListener((observable, oldValue, newValue) -> mainApp.log(newValue));
+        createTask.messageProperty().addListener((observable, oldValue, newValue) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Task finished.");
+            alert.setHeaderText("Created QR code images.");
+            alert.setContentText(newValue);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+        });
         new Thread(createTask).start();
         // Close the settings window and return to main app. Meanwhile, the
         // other thread will continue.

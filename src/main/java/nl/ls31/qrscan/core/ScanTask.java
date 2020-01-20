@@ -2,6 +2,7 @@ package nl.ls31.qrscan.core;
 
 import com.google.zxing.NotFoundException;
 import javafx.concurrent.Task;
+import org.tinylog.Logger;
 
 import java.awt.*;
 import java.io.IOException;
@@ -72,12 +73,12 @@ public class ScanTask extends Task<List<SingleResult>> {
         Path logFile = dir.resolve("ScanResults_QRScan_" + timestamp + ".csv");
         try {
             CsvLogWriter.writeLogFile(results, logFile);
-            updateMessage("Results were logged to CSV file: " + logFile.getFileName() + ".");
+            Logger.info("Results were logged to CSV file: " + logFile.getFileName() + ".");
             if (openLogFile) {
                 Desktop.getDesktop().open(logFile.toFile());
             }
         } catch (IOException e) {
-            updateMessage("!Unable to log results in CSV file.");
+            Logger.error(e, "Unable to log results in CSV file.");
         }
     }
 
@@ -104,8 +105,7 @@ public class ScanTask extends Task<List<SingleResult>> {
         try {
             Files.walkFileTree(inputDir, pdfFileVisitor);
         } catch (IOException e) {
-            updateMessage("!Unable to read PDF file.");
-            e.printStackTrace();
+            Logger.error(e, "!Unable to read PDF file.");
         }
         return allFiles;
     }
@@ -121,33 +121,34 @@ public class ScanTask extends Task<List<SingleResult>> {
         int success = 0;
         int failed = 0;
         int current = 0;
-        updateMessage("New scan initiated." + LSEP + "  Input directory: " + inputDir.getFileName() + LSEP
+        Logger.info("New scan initiated." + LSEP + "  Input directory: " + inputDir.getFileName() + LSEP
                 + "  Scanning page:   " + qrCodePage + LSEP + "  Number of files: " + fileCount);
 
         // Start the loop through all files.
         List<SingleResult> results = new ArrayList<>();
         for (QrPdf pdf : inputFiles) {
             updateProgress(++current, fileCount);
-            updateMessage("Now scanning file " + pdf.getPath().getFileName() + ".");
+            Logger.info("Now scanning file " + pdf.getPath().getFileName() + ".");
 
             try {
                 String qrCode = pdf.getQRCode(qrCodePage, useFileAttributes, writeFileAttributes);
-                updateMessage("Found QR code " + qrCode + " in " + pdf.getPath().getFileName() + ".");
+                Logger.info("Found QR code " + qrCode + " in " + pdf.getPath().getFileName() + ".");
                 results.add(new SingleResult(pdf, SingleResult.ResultStatus.QR_CODE_FOUND, qrCodePage, qrCode));
                 success++;
             } catch (IOException e) {
-                updateMessage("!Unable to access " + pdf.getPath().getFileName() + " or page not found.");
+                Logger.warn(e, "!Unable to access " + pdf.getPath().getFileName() + " or page not found.");
                 results.add(new SingleResult(pdf, SingleResult.ResultStatus.NO_FILE_ACCESS, qrCodePage, ""));
                 failed++;
             } catch (NotFoundException e) {
-                updateMessage("!Unable to find QR code at specified page in " + pdf.getPath().getFileName() + ".");
+                Logger.warn(e, "!Unable to find QR code at specified page in " + pdf.getPath().getFileName() + ".");
                 results.add(new SingleResult(pdf, SingleResult.ResultStatus.NO_QR_CODE, qrCodePage, ""));
                 failed++;
             }
         }
 
-        updateMessage(
-                "Summary: scanned " + fileCount + " files: " + success + " successful, " + failed + " unsuccessful.");
+        String summaryMessage = "Summary: scanned " + fileCount + " files: " + success + " successful, " + failed + " unsuccessful.";
+        Logger.info(summaryMessage);
+        updateMessage(summaryMessage);
         return results;
     }
 }

@@ -2,6 +2,7 @@ package nl.ls31.qrscan.core;
 
 import com.google.zxing.WriterException;
 import javafx.concurrent.Task;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -52,7 +53,7 @@ public class CreateTask extends Task<List<Path>> {
      */
     @Override
     protected List<Path> call() {
-        updateMessage("Creating new images files for QR codes." + LSEP + "  Input file:       "
+        Logger.info("Creating new images files for QR codes." + LSEP + "  Input file:       "
                 + inputFile.getFileName().toString() + LSEP + "  Output directory: "
                 + outputDir.getFileName().toString() + LSEP + "  Size (px):        " + size + LSEP
                 + "  Annotation:       " + withText);
@@ -79,7 +80,7 @@ public class CreateTask extends Task<List<Path>> {
         for (String code : codeList) {
             updateProgress(++current, allCodes);
             if (!QrPdf.isValidQRCode(code)) {
-                updateMessage("Skipped code " + code + " with illegal characters. ");
+                Logger.warn("Skipped code " + code + " with illegal characters. ");
                 illegal++;
                 continue;
             }
@@ -88,19 +89,17 @@ public class CreateTask extends Task<List<Path>> {
                 imageList.add(createImage(code, outputDir));
                 success++;
             } catch (WriterException e) {
-                updateMessage("!Unable to encode \"" + code + "\". ");
+                Logger.error(e, "Unable to encode \"" + code + "\". ");
                 failed++;
             } catch (IOException e) {
-                updateMessage("!Unable to save file for code \"" + code + "\". ");
+                Logger.error(e, "Unable to save file for code \"" + code + "\". ");
                 failed++;
             }
         }
 
-        updateMessage("Summary for " + allCodes + " codes: " + LSEP
-                + "  Successful:                     " + success + " codes" + LSEP
-                + "  Skipped (illegal characters):  " + illegal + " codes" + LSEP
-                + "  Unable to create image:        " + failed + " codes");
-
+        String summaryMessage = "Summary for " + allCodes + " codes: successful: " + success + " codes; skipped (illegal characters): " + illegal + " codes; unable to create image: " + failed + " codes. ";
+        Logger.info(summaryMessage);
+        updateMessage(summaryMessage);
         return imageList;
     }
 
@@ -113,9 +112,9 @@ public class CreateTask extends Task<List<Path>> {
         if (!Files.exists(outputDir)) {
             try {
                 Files.createDirectory(outputDir);
-                updateMessage("Output directory did not exist and has been created.");
+                Logger.info("Output directory did not exist and has been created.");
             } catch (IOException e) {
-                updateMessage("!Unable to create or use output path.");
+                Logger.error(e, "Unable to create or use output path.");
             }
         }
     }
@@ -131,10 +130,10 @@ public class CreateTask extends Task<List<Path>> {
         try {
             codeList.addAll(Files.readAllLines(codeFile));
         } catch (IOException e) {
-            updateMessage("!Unable to read code file.");
+            Logger.error(e, "Unable to read code file.");
         }
         if (codeList.isEmpty()) {
-            updateMessage("The code file seems empty.");
+            Logger.warn("The code file seems empty.");
         }
         return codeList;
     }

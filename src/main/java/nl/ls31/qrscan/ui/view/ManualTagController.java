@@ -5,12 +5,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import nl.ls31.qrscan.App;
 import nl.ls31.qrscan.core.QrPdf;
 import nl.ls31.qrscan.ui.model.ManualTagSettings;
+import org.tinylog.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,20 +99,23 @@ public class ManualTagController {
         try {
             pdf.setQRCodeFileAttribute(settings.getCode());
             String message = "Successfully tagged " + settings.getPDFPath().getFileName().toString() + " with code "
-                    + settings.getCode();
-            mainApp.log(message);
+                    + settings.getCode() + ". ";
+            Logger.info(message);
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Successfully tagged");
-            alert.setHeaderText("Tagging successful.");
+            alert.setTitle("Task finished.");
+            alert.setHeaderText("Added file attribute.");
             alert.setContentText(message);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
             ((Stage) tagButton.getScene().getWindow()).close();
         } catch (IllegalArgumentException | IOException e) {
+            Logger.error("Adding custom file attributes may not be supported by the file system, or writing to the file was denied.");
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Unable to tag");
             alert.setHeaderText("Unable to edit custom file attribute.");
             alert.setContentText(
                     "Adding custom file attributes may not be supported by the file system, or writing to the file was denied.");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
         }
     }

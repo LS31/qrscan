@@ -13,6 +13,7 @@ import nl.ls31.qrscan.ui.model.ManualTagSettings;
 import nl.ls31.qrscan.ui.model.ScanSettings;
 import nl.ls31.qrscan.ui.view.RootController;
 import nl.ls31.qrscan.ui.view.ScanController;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 
@@ -86,16 +87,6 @@ public class App extends Application {
     }
 
     /**
-     * Adds a message to the application log. For now, these messages are shown on a new line in the lower 'logging
-     * panel' of the application.
-     *
-     * @param message Log message
-     */
-    public void log(String message) {
-        logArea.appendText(message + LSEP);
-    }
-
-    /**
      * Starts the main application.
      */
     @Override
@@ -109,7 +100,7 @@ public class App extends Application {
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e, "Root layout not found.");
         }
         Scene scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
@@ -121,11 +112,12 @@ public class App extends Application {
         try {
             AnchorPane scanView = scanViewLoader.load();
             rootLayout.setCenter(scanView);
-
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e, "Scan layout not found.");
         }
         ScanController scanController = scanViewLoader.getController();
         scanController.setMainApp(this);
     }
 }
+
+// TODO Show logging in logging plane instead of console.

@@ -3,6 +3,7 @@ package nl.ls31.qrscan.ui.view;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import nl.ls31.qrscan.App;
 import nl.ls31.qrscan.core.RenameTask;
@@ -149,8 +150,14 @@ public class ScanController {
         } else {
             task = new ScanTask(inputDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         }
-        // Messages are passed into the log.
-        task.messageProperty().addListener((observable, oldValue, newValue) -> mainApp.log(newValue));
+        task.messageProperty().addListener((observable, oldValue, newValue) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Task finished.");
+            alert.setHeaderText("Scanned and/or renamed PDF files.");
+            alert.setContentText(newValue);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+        });
         new Thread(task).start();
     }
 }
