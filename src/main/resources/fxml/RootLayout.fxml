@@ -6,7 +6,8 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="800.0"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="nl.ls31.qrscan.ui.view.RootController">
     <bottom>
-        <TextArea editable="false" maxHeight="1.7976931348623157E308" promptText="Log" wrapText="true"
+        <TextArea fx:id="logTextArea" editable="false" maxHeight="1.7976931348623157E308" promptText="Log"
+                  wrapText="true"
                   BorderPane.alignment="CENTER">
             <font>
                 <Font name="Courier New" size="12.0"/>

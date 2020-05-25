@@ -1,10 +1,8 @@
 package nl.ls31.qrscan;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -27,8 +25,6 @@ public class App extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ScanSettings scanSettings;
-    @FXML
-    private TextArea logArea;
     private CreateSettings createSettings;
     private ManualTagSettings manualTagSettings;
 
@@ -106,7 +102,6 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        logArea = (TextArea) rootLayout.getBottom();
         RootController rootController = loader.getController();
         rootController.setMainApp(this);
         try {
@@ -119,5 +114,3 @@ public class App extends Application {
         scanController.setMainApp(this);
     }
 }
-
-// TODO Show logging in logging plane instead of console.
