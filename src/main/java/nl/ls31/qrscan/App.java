@@ -24,9 +24,9 @@ public class App extends Application {
     final static private String LSEP = System.lineSeparator();
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ScanSettings scanSettings;
-    private CreateSettings createSettings;
-    private ManualTagSettings manualTagSettings;
+    private final ScanSettings scanSettings;
+    private final CreateSettings createSettings;
+    private final ManualTagSettings manualTagSettings;
 
     /**
      * Main application.
@@ -112,5 +112,6 @@ public class App extends Application {
         }
         ScanController scanController = scanViewLoader.getController();
         scanController.setMainApp(this);
+        scanController.updateControlsByModel();
     }
 }

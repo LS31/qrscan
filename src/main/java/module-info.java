@@ -7,6 +7,7 @@ module qrscan {
     requires com.google.zxing.javase;
     requires org.tinylog.api;
     requires org.tinylog.impl;
+    requires java.prefs;
 
     opens nl.ls31.qrscan.ui.view to javafx.fxml;
     exports nl.ls31.qrscan;

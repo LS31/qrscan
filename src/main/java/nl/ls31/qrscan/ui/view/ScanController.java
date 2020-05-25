@@ -56,6 +56,20 @@ public class ScanController {
     }
 
     /**
+     * Update all control states using the model as reference.
+     */
+    public void updateControlsByModel() {
+        inputDirTextField.setText(mainApp.getScanSettings().getInputDirectory().toAbsolutePath().toString());
+        targetDirTextField.setText(mainApp.getScanSettings().getTargetDirectory().toAbsolutePath().toString());
+        useFileAttributeCheckBox.setSelected(mainApp.getScanSettings().getUseFileAttributes());
+        writeFileAttributeCheckBox.setSelected(mainApp.getScanSettings().getWriteFileAttributes());
+        renameCheckBox.setSelected(mainApp.getScanSettings().getWithRenaming());
+        toggleRenaming();
+        openLogFileCheckBox.setSelected(mainApp.getScanSettings().getOpenLogFile());
+        qrPageSpinner.getValueFactory().setValue(mainApp.getScanSettings().getQRPage());
+    }
+
+    /**
      * Handles clicks to the input directory button by showing a file open dialog.
      */
     @FXML
@@ -65,8 +79,8 @@ public class ScanController {
         File dir = dirChooser.showDialog(mainApp.getPrimaryStage());
         if (dir != null) {
             // Change the text field and update the model.
-            inputDirTextField.setText(dir.toPath().toAbsolutePath().toString());
             mainApp.getScanSettings().setInputDirectory(dir.toPath());
+            inputDirTextField.setText(mainApp.getScanSettings().getInputDirectory().toAbsolutePath().toString());
         }
     }
 
@@ -80,8 +94,8 @@ public class ScanController {
         File dir = dirChooser.showDialog(mainApp.getPrimaryStage());
         if (dir != null) {
             // Change the text field and update the model.
-            targetDirTextField.setText(dir.toPath().toAbsolutePath().toString());
             mainApp.getScanSettings().setTargetDirectory(dir.toPath());
+            targetDirTextField.setText(mainApp.getScanSettings().getTargetDirectory().toAbsolutePath().toString());
         }
     }
 
@@ -115,8 +129,15 @@ public class ScanController {
      */
     @FXML
     private void handleRenameCheckBox() {
+        mainApp.getScanSettings().setWithRenaming(renameCheckBox.isSelected());
+        toggleRenaming();
+    }
+
+    /**
+     * Toggle a set of controls depending on whether or not we want to rename.
+     */
+    private void toggleRenaming() {
         boolean doRename = renameCheckBox.isSelected();
-        mainApp.getScanSettings().setWithRenaming(doRename);
         targetDirLabel.setDisable(!doRename);
         targetDirTextField.setDisable(!doRename);
         targetDirButton.setDisable(!doRename);

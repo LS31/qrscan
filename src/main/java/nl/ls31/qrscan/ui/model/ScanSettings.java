@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.prefs.Preferences;
 
 /**
  * This model hold all settings regarding the scan task.
@@ -13,13 +15,26 @@ import java.nio.file.Path;
  */
 public class ScanSettings {
 
-    private SimpleObjectProperty<Path> inputDir = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<Path> targetDir = new SimpleObjectProperty<>();
-    private SimpleIntegerProperty qrPage = new SimpleIntegerProperty(1);
-    private SimpleBooleanProperty withRenaming = new SimpleBooleanProperty(false);
-    private SimpleBooleanProperty useFileAttributes = new SimpleBooleanProperty(true);
-    private SimpleBooleanProperty writeFileAttributes = new SimpleBooleanProperty(true);
-    private SimpleBooleanProperty openLogFile = new SimpleBooleanProperty(true);
+    private final Preferences prefs;
+    private final SimpleObjectProperty<Path> inputDir;
+    private final SimpleObjectProperty<Path> targetDir;
+    private final SimpleIntegerProperty qrPage;
+    private final SimpleBooleanProperty withRenaming;
+    private final SimpleBooleanProperty useFileAttributes;
+    private final SimpleBooleanProperty writeFileAttributes;
+    private final SimpleBooleanProperty openLogFile;
+
+    public ScanSettings() {
+        prefs = Preferences.userNodeForPackage(this.getClass());
+
+        inputDir = new SimpleObjectProperty<>(Paths.get(prefs.get("LAST_INPUT_DIR", "")));
+        targetDir = new SimpleObjectProperty<>(Paths.get(prefs.get("LAST_TARGET_DIR", "")));
+        qrPage = new SimpleIntegerProperty(prefs.getInt("LAST_QR_PAGE", 1));
+        withRenaming = new SimpleBooleanProperty(prefs.getBoolean("LAST_WITH_RENAMING", false));
+        useFileAttributes = new SimpleBooleanProperty(prefs.getBoolean("LAST_USE_FILE_ATTRIBUTES", true));
+        writeFileAttributes = new SimpleBooleanProperty(prefs.getBoolean("LAST_WRITE_FILE_ATTRIBUTES", true));
+        openLogFile = new SimpleBooleanProperty(prefs.getBoolean("LAST_OPEN_LOG_FILE", true));
+    }
 
     /**
      * Gets the input directory path setting. The path may be invalid and the directory may not exist.
@@ -37,6 +52,7 @@ public class ScanSettings {
      */
     public final void setInputDirectory(Path path) {
         this.inputDir.set(path);
+        prefs.put("LAST_INPUT_DIR", path.toAbsolutePath().toString());
     }
 
     /**
@@ -59,6 +75,7 @@ public class ScanSettings {
             throw new IllegalArgumentException("Page is negative or zero.");
         }
         this.qrPage.set(page);
+        prefs.putInt("LAST_QR_PAGE", page);
     }
 
     /**
@@ -77,6 +94,7 @@ public class ScanSettings {
      */
     public final void setTargetDirectory(Path path) {
         this.targetDir.set(path);
+        prefs.put("LAST_TARGET_DIR", path.toAbsolutePath().toString());
     }
 
     /**
@@ -95,6 +113,7 @@ public class ScanSettings {
      */
     public final void setUseFileAttributes(boolean useFileAttributes) {
         this.useFileAttributes.set(useFileAttributes);
+        prefs.putBoolean("LAST_USE_FILE_ATTRIBUTES", useFileAttributes);
     }
 
     /**
@@ -113,6 +132,7 @@ public class ScanSettings {
      */
     public final void setWithRenaming(boolean withRenaming) {
         this.withRenaming.set(withRenaming);
+        prefs.putBoolean("LAST_WITH_RENAMING", withRenaming);
     }
 
     /**
@@ -131,6 +151,7 @@ public class ScanSettings {
      */
     public final void setWriteFileAttributes(boolean writeFileAttributes) {
         this.writeFileAttributes.set(writeFileAttributes);
+        prefs.putBoolean("LAST_WRITE_FILE_ATTRIBUTES", writeFileAttributes);
     }
 
     /**
@@ -149,5 +170,6 @@ public class ScanSettings {
      */
     public final void setOpenLogFile(boolean openLogFile) {
         this.openLogFile.set(openLogFile);
+        prefs.putBoolean("LAST_OPEN_LOG_FILE", openLogFile);
     }
 }
