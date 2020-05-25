@@ -54,8 +54,8 @@ public class RootController {
     public void handleAboutItem() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("About QRScan");
-        alert.setHeaderText("QRScan");
-        alert.setContentText("Version 2.0.0.\r\n" + "A big thanks to the following frameworks: "
+        alert.setHeaderText("QRScan version 2.1.0");
+        alert.setContentText("A big thanks to the following frameworks: "
                 + "PDFBox by The Apache Software Foundation (Apache license v2.0), "
                 + "Java Advanced Imaging Image I/O Tools API (BSD licence), "
                 + "ZXing project (Apache license v2.0). ");
