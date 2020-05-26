@@ -19,3 +19,14 @@ Good QR code recognition has been attained with documents that were scanned at a
 
 # Acknowledgements
 A big thanks to the following projects: [PDFBox by The Apache Software Foundation](https://pdfbox.apache.org/), [Java Advanced Imaging Image I/O Tools API](https://github.com/jai-imageio/jai-imageio-jpeg2000), and the [ZXing project](https://github.com/zxing).
+
+# Release history
+* **1.0.0**
+  * First release.
+* **2.0.0**
+  * Update to JDK/JRE 13; use Java Platform Module System.
+  * Minor changes in lay-out.
+* **2.1.0**
+  * Remember previous settings when restarting program.
+  * Update to JDK/JRE 14.
+  * Update versions of all dependencies.

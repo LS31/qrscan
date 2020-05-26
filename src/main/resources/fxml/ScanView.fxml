@@ -58,7 +58,7 @@
                 </CheckBox>
                 <CheckBox fx:id="writeFileAttributeCheckBox" mnemonicParsing="false"
                           onAction="#handleWriteFileAttributeCheckBox" selected="true"
-                          text="Store QR code as file attribute for future use." GridPane.columnIndex="1"
+                          text="Store QR code as file attribute for (faster) future use." GridPane.columnIndex="1"
                           GridPane.rowIndex="3">
                     <tooltip>
                         <Tooltip text="This may speed up future scan actions."/>

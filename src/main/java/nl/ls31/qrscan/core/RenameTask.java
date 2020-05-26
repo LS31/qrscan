@@ -35,7 +35,7 @@ import java.util.List;
 public class RenameTask extends ScanTask {
 
     final static private String LSEP = System.lineSeparator();
-    private Path outputDir;
+    private final Path outputDir;
 
     /**
      * This task performs the thing mentioned in ScanTask. However, after all PDFs are scanned for QR codes, the PDFs
@@ -132,6 +132,7 @@ public class RenameTask extends ScanTask {
         // Iterate over every scanned file.
         for (SingleResult scanResult : scanResults) {
             current++;
+            updateProgress(current, fileCount);
 
             if (!scanResult.isQRCodeFound()) {
                 // Skip this file.

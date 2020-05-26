@@ -104,7 +104,16 @@ public class CreateController {
         boolean withAnnotation = mainApp.getCreateSettings().getWithAnnotation();
         mainApp.getCreateSettings().setImageSize(sizeSpinner.getValue());
         int size = mainApp.getCreateSettings().getImageSize();
+
         Task<List<Path>> createTask = new CreateTask(inputFile, outputDir, size, withAnnotation);
+
+        ProgressDialog pForm = new ProgressDialog("Creating files...", createTask.progressProperty());
+        pForm.show();
+
+        createTask.setOnSucceeded(event -> {
+            pForm.close();
+        });
+
         createTask.messageProperty().addListener((observable, oldValue, newValue) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Task finished.");
@@ -113,7 +122,9 @@ public class CreateController {
             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
         });
+
         new Thread(createTask).start();
+
         // Close the settings window and return to main app. Meanwhile, the
         // other thread will continue.
         ((Stage) createButton.getScene().getWindow()).close();

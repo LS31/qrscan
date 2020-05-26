@@ -171,6 +171,16 @@ public class ScanController {
         } else {
             task = new ScanTask(inputDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         }
+
+        ProgressDialog pForm = new ProgressDialog("Processing...", task.progressProperty());
+        pForm.show();
+        scanButton.setDisable(true);
+
+        task.setOnSucceeded(event -> {
+            pForm.close();
+            scanButton.setDisable(false);
+        });
+
         task.messageProperty().addListener((observable, oldValue, newValue) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Task finished.");
@@ -179,6 +189,7 @@ public class ScanController {
             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
         });
+
         new Thread(task).start();
     }
 }
