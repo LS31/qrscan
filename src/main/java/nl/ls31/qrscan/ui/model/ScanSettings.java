@@ -15,7 +15,7 @@ import java.util.prefs.Preferences;
  */
 public class ScanSettings {
 
-    private final Preferences prefs;
+    private final Preferences storedPreferences;
     private final SimpleObjectProperty<Path> inputDir;
     private final SimpleObjectProperty<Path> targetDir;
     private final SimpleIntegerProperty qrPage;
@@ -25,15 +25,15 @@ public class ScanSettings {
     private final SimpleBooleanProperty openLogFile;
 
     public ScanSettings() {
-        prefs = Preferences.userNodeForPackage(this.getClass());
+        storedPreferences = Preferences.userNodeForPackage(this.getClass());
 
-        inputDir = new SimpleObjectProperty<>(Paths.get(prefs.get("LAST_INPUT_DIR", "")));
-        targetDir = new SimpleObjectProperty<>(Paths.get(prefs.get("LAST_TARGET_DIR", "")));
-        qrPage = new SimpleIntegerProperty(prefs.getInt("LAST_QR_PAGE", 1));
-        withRenaming = new SimpleBooleanProperty(prefs.getBoolean("LAST_WITH_RENAMING", false));
-        useFileAttributes = new SimpleBooleanProperty(prefs.getBoolean("LAST_USE_FILE_ATTRIBUTES", true));
-        writeFileAttributes = new SimpleBooleanProperty(prefs.getBoolean("LAST_WRITE_FILE_ATTRIBUTES", true));
-        openLogFile = new SimpleBooleanProperty(prefs.getBoolean("LAST_OPEN_LOG_FILE", true));
+        inputDir = new SimpleObjectProperty<>(Paths.get(storedPreferences.get("LAST_INPUT_DIR", "")));
+        targetDir = new SimpleObjectProperty<>(Paths.get(storedPreferences.get("LAST_TARGET_DIR", "")));
+        qrPage = new SimpleIntegerProperty(storedPreferences.getInt("LAST_QR_PAGE", 1));
+        withRenaming = new SimpleBooleanProperty(storedPreferences.getBoolean("LAST_WITH_RENAMING", false));
+        useFileAttributes = new SimpleBooleanProperty(storedPreferences.getBoolean("LAST_USE_FILE_ATTRIBUTES", true));
+        writeFileAttributes = new SimpleBooleanProperty(storedPreferences.getBoolean("LAST_WRITE_FILE_ATTRIBUTES", true));
+        openLogFile = new SimpleBooleanProperty(storedPreferences.getBoolean("LAST_OPEN_LOG_FILE", true));
     }
 
     /**
@@ -52,7 +52,7 @@ public class ScanSettings {
      */
     public final void setInputDirectory(Path path) {
         this.inputDir.set(path);
-        prefs.put("LAST_INPUT_DIR", path.toAbsolutePath().toString());
+        storedPreferences.put("LAST_INPUT_DIR", path.toAbsolutePath().toString());
     }
 
     /**
@@ -75,7 +75,7 @@ public class ScanSettings {
             throw new IllegalArgumentException("Page is negative or zero.");
         }
         this.qrPage.set(page);
-        prefs.putInt("LAST_QR_PAGE", page);
+        storedPreferences.putInt("LAST_QR_PAGE", page);
     }
 
     /**
@@ -94,7 +94,7 @@ public class ScanSettings {
      */
     public final void setTargetDirectory(Path path) {
         this.targetDir.set(path);
-        prefs.put("LAST_TARGET_DIR", path.toAbsolutePath().toString());
+        storedPreferences.put("LAST_TARGET_DIR", path.toAbsolutePath().toString());
     }
 
     /**
@@ -113,7 +113,7 @@ public class ScanSettings {
      */
     public final void setUseFileAttributes(boolean useFileAttributes) {
         this.useFileAttributes.set(useFileAttributes);
-        prefs.putBoolean("LAST_USE_FILE_ATTRIBUTES", useFileAttributes);
+        storedPreferences.putBoolean("LAST_USE_FILE_ATTRIBUTES", useFileAttributes);
     }
 
     /**
@@ -132,7 +132,7 @@ public class ScanSettings {
      */
     public final void setWithRenaming(boolean withRenaming) {
         this.withRenaming.set(withRenaming);
-        prefs.putBoolean("LAST_WITH_RENAMING", withRenaming);
+        storedPreferences.putBoolean("LAST_WITH_RENAMING", withRenaming);
     }
 
     /**
@@ -151,7 +151,7 @@ public class ScanSettings {
      */
     public final void setWriteFileAttributes(boolean writeFileAttributes) {
         this.writeFileAttributes.set(writeFileAttributes);
-        prefs.putBoolean("LAST_WRITE_FILE_ATTRIBUTES", writeFileAttributes);
+        storedPreferences.putBoolean("LAST_WRITE_FILE_ATTRIBUTES", writeFileAttributes);
     }
 
     /**
@@ -170,6 +170,6 @@ public class ScanSettings {
      */
     public final void setOpenLogFile(boolean openLogFile) {
         this.openLogFile.set(openLogFile);
-        prefs.putBoolean("LAST_OPEN_LOG_FILE", openLogFile);
+        storedPreferences.putBoolean("LAST_OPEN_LOG_FILE", openLogFile);
     }
 }

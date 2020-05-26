@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 import nl.ls31.qrscan.core.QrPdf;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.prefs.Preferences;
 
 /**
  * This model holds all settings regarding the manual tagging operation.
@@ -13,8 +15,16 @@ import java.nio.file.Path;
  */
 public class ManualTagSettings {
 
-    private SimpleObjectProperty<Path> pdfPath = new SimpleObjectProperty<>();
-    private SimpleStringProperty code = new SimpleStringProperty();
+    private final Preferences storedPreferences;
+    private final SimpleObjectProperty<Path> pdfPath;
+    private final SimpleStringProperty code;
+
+    public ManualTagSettings() {
+        storedPreferences = Preferences.userNodeForPackage(this.getClass());
+
+        pdfPath = new SimpleObjectProperty<>(Paths.get(storedPreferences.get("LAST_PDF_PATH", "")));
+        code = new SimpleStringProperty(storedPreferences.get("LAST_CODE", ""));
+    }
 
     /**
      * Gets the PDF path. The path may not be valid.
@@ -32,6 +42,7 @@ public class ManualTagSettings {
      */
     public final void setPDFPath(Path file) {
         pdfPath.set(file);
+        storedPreferences.put("LAST_PDF_PATH", file.toAbsolutePath().toString());
     }
 
     /**
@@ -55,5 +66,6 @@ public class ManualTagSettings {
         }
 
         this.code.set(code);
+        storedPreferences.put("LAST_CODE", code);
     }
 }

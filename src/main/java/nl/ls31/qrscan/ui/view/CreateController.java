@@ -47,6 +47,16 @@ public class CreateController {
     }
 
     /**
+     * Update all control states using the model as reference.
+     */
+    public void updateControlsByModel() {
+        inputFileTextField.setText(mainApp.getCreateSettings().getInputFile().toAbsolutePath().toString());
+        outputDirTextField.setText(mainApp.getCreateSettings().getOutputDirectory().toAbsolutePath().toString());
+        annotationCheckBox.setSelected(mainApp.getCreateSettings().getWithAnnotation());
+        sizeSpinner.getValueFactory().setValue(mainApp.getCreateSettings().getImageSize());
+    }
+
+    /**
      * Handles clicks on the input file button by showing an open file dialog.
      */
     @FXML

@@ -119,4 +119,9 @@ public class ManualTagController {
             alert.showAndWait();
         }
     }
+
+    public void updateControlsByModel() {
+        pdfPathField.setText(mainApp.getManualTagSettings().getPDFPath().toAbsolutePath().toString());
+        codeField.setText(mainApp.getManualTagSettings().getCode());
+    }
 }

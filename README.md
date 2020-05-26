@@ -12,7 +12,7 @@ To be able to incorporate QR codes in the documents you want to print in the fir
 We used the QRScan tool to send questionnaires labeled with individual QR codes. For the returned questionnaires, we used QRScan to register and to archive the scanned responses.
 
 # Installation
-The [provided executable JAR](https://github.com/LS31/qrscan/releases) is ready to use. The current version is made for Java 14. You need to have a recent Java Virtual Machine ([Java Runtime Environment](https://java.com/en/download/)) installed to execute the JAR file. On Windows, simply double-click the JAR file to execute. 
+The [provided executable JAR](https://github.com/LS31/qrscan/releases) is ready to use. The current version runs with Java 14. You need to have a recent Java Virtual Machine ([Java Runtime Environment](https://java.com/en/download/)) installed to execute the JAR file. On Windows, simply double-click the JAR file to execute. 
 
 # Good QR code recognition
 Good QR code recognition has been attained with documents that were scanned at a resolution of 300 DPI. 

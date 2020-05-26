@@ -21,7 +21,6 @@ import java.io.IOException;
  * @author Lars Steggink
  */
 public class App extends Application {
-    final static private String LSEP = System.lineSeparator();
     private Stage primaryStage;
     private BorderPane rootLayout;
     private final ScanSettings scanSettings;

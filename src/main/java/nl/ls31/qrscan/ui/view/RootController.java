@@ -80,6 +80,7 @@ public class RootController {
             // Give the controllers access to the main app.
             CreateController createController = createViewLoader.getController();
             createController.setMainApp(mainApp);
+            createController.updateControlsByModel();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,6 +102,7 @@ public class RootController {
             // Give the controllers access to the main app.
             ManualTagController manualTagController = manualTagViewLoader.getController();
             manualTagController.setMainApp(mainApp);
+            manualTagController.updateControlsByModel();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
