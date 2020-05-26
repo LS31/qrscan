@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="702.0"
-            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0"
+            prefWidth="702.0" xmlns="http://javafx.com/javafx/11.0.1"
             fx:controller="nl.ls31.qrscan.ui.view.ScanController">
     <BorderPane layoutX="-38.0" prefHeight="356.0" prefWidth="702.0" AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -30,6 +30,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                     <RowConstraints/>
                 </rowConstraints>
                 <Label text="Input directory:"/>
@@ -38,7 +39,7 @@
                 <TextField fx:id="inputDirTextField" editable="false" focusTraversable="false"
                            GridPane.columnIndex="1"/>
                 <Button fx:id="scanButton" mnemonicParsing="false" onAction="#handleScanButton" prefWidth="150.0"
-                        text="Scan" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                        text="Scan" GridPane.columnIndex="2" GridPane.rowIndex="8">
                     <font>
                         <Font name="System Bold" size="12.0"/>
                     </font>
@@ -58,7 +59,7 @@
                 </CheckBox>
                 <CheckBox fx:id="writeFileAttributeCheckBox" mnemonicParsing="false"
                           onAction="#handleWriteFileAttributeCheckBox" selected="true"
-                          text="Store QR code as file attribute for future use." GridPane.columnIndex="1"
+                          text="Store QR code as file attribute for (faster) future use." GridPane.columnIndex="1"
                           GridPane.rowIndex="3">
                     <tooltip>
                         <Tooltip text="This may speed up future scan actions."/>

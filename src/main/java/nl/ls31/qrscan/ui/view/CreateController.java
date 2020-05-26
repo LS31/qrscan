@@ -2,10 +2,8 @@ package nl.ls31.qrscan.ui.view;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -46,6 +44,16 @@ public class CreateController {
      */
     public void setMainApp(App mainApp) {
         this.mainApp = mainApp;
+    }
+
+    /**
+     * Update all control states using the model as reference.
+     */
+    public void updateControlsByModel() {
+        inputFileTextField.setText(mainApp.getCreateSettings().getInputFile().toAbsolutePath().toString());
+        outputDirTextField.setText(mainApp.getCreateSettings().getOutputDirectory().toAbsolutePath().toString());
+        annotationCheckBox.setSelected(mainApp.getCreateSettings().getWithAnnotation());
+        sizeSpinner.getValueFactory().setValue(mainApp.getCreateSettings().getImageSize());
     }
 
     /**
@@ -96,10 +104,25 @@ public class CreateController {
         boolean withAnnotation = mainApp.getCreateSettings().getWithAnnotation();
         mainApp.getCreateSettings().setImageSize(sizeSpinner.getValue());
         int size = mainApp.getCreateSettings().getImageSize();
+
         Task<List<Path>> createTask = new CreateTask(inputFile, outputDir, size, withAnnotation);
-        // Messages are passed into the log.
-        createTask.messageProperty().addListener((observable, oldValue, newValue) -> mainApp.log(newValue));
+
+        ProgressDialog pForm = new ProgressDialog("Creating files...", createTask.progressProperty());
+        pForm.show();
+
+        createTask.setOnSucceeded(event -> pForm.close());
+
+        createTask.messageProperty().addListener((observable, oldValue, newValue) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Task finished.");
+            alert.setHeaderText("Created QR code images.");
+            alert.setContentText(newValue);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+        });
+
         new Thread(createTask).start();
+
         // Close the settings window and return to main app. Meanwhile, the
         // other thread will continue.
         ((Stage) createButton.getScene().getWindow()).close();

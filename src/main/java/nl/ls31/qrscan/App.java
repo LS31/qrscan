@@ -1,10 +1,8 @@
 package nl.ls31.qrscan;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -13,6 +11,7 @@ import nl.ls31.qrscan.ui.model.ManualTagSettings;
 import nl.ls31.qrscan.ui.model.ScanSettings;
 import nl.ls31.qrscan.ui.view.RootController;
 import nl.ls31.qrscan.ui.view.ScanController;
+import org.tinylog.Logger;
 
 import java.io.IOException;
 
@@ -22,25 +21,11 @@ import java.io.IOException;
  * @author Lars Steggink
  */
 public class App extends Application {
-    final static private String LSEP = System.lineSeparator();
-
-    /**
-     * Starts the application.
-     *
-     * @param args unused
-     */
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ScanSettings scanSettings;
-    @FXML
-    private TextArea logArea;
-    private CreateSettings createSettings;
-
-    private ManualTagSettings manualTagSettings;
+    private final ScanSettings scanSettings;
+    private final CreateSettings createSettings;
+    private final ManualTagSettings manualTagSettings;
 
     /**
      * Main application.
@@ -49,6 +34,15 @@ public class App extends Application {
         this.scanSettings = new ScanSettings();
         this.createSettings = new CreateSettings();
         this.manualTagSettings = new ManualTagSettings();
+    }
+
+    /**
+     * Starts the application.
+     *
+     * @param args unused
+     */
+    public static void main(String[] args) {
+        launch(args);
     }
 
     /**
@@ -88,16 +82,6 @@ public class App extends Application {
     }
 
     /**
-     * Adds a message to the application log. For now, these messages are shown on a new line in the lower 'logging
-     * panel' of the application.
-     *
-     * @param message Log message
-     */
-    public void log(String message) {
-        logArea.appendText(message + LSEP);
-    }
-
-    /**
      * Starts the main application.
      */
     @Override
@@ -111,23 +95,22 @@ public class App extends Application {
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e, "Root layout not found.");
         }
         Scene scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        logArea = (TextArea) rootLayout.getBottom();
         RootController rootController = loader.getController();
         rootController.setMainApp(this);
         try {
             AnchorPane scanView = scanViewLoader.load();
             rootLayout.setCenter(scanView);
-
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.error(e, "Scan layout not found.");
         }
         ScanController scanController = scanViewLoader.getController();
         scanController.setMainApp(this);
+        scanController.updateControlsByModel();
     }
 }

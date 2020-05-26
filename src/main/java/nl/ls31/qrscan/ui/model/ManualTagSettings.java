@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleStringProperty;
 import nl.ls31.qrscan.core.QrPdf;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.prefs.Preferences;
 
 /**
  * This model holds all settings regarding the manual tagging operation.
@@ -13,16 +15,15 @@ import java.nio.file.Path;
  */
 public class ManualTagSettings {
 
-    private SimpleObjectProperty<Path> pdfPath = new SimpleObjectProperty<>();
-    private SimpleStringProperty code = new SimpleStringProperty();
+    private final Preferences storedPreferences;
+    private final SimpleObjectProperty<Path> pdfPath;
+    private final SimpleStringProperty code;
 
-    /**
-     * Sets the PDF path. This does not check the path for validity.
-     *
-     * @param file PDF path
-     */
-    public final void setPDFPath(Path file) {
-        pdfPath.set(file);
+    public ManualTagSettings() {
+        storedPreferences = Preferences.userNodeForPackage(this.getClass());
+
+        pdfPath = new SimpleObjectProperty<>(Paths.get(storedPreferences.get("LAST_PDF_PATH", "")));
+        code = new SimpleStringProperty(storedPreferences.get("LAST_CODE", ""));
     }
 
     /**
@@ -32,6 +33,25 @@ public class ManualTagSettings {
      */
     public final Path getPDFPath() {
         return pdfPath.get();
+    }
+
+    /**
+     * Sets the PDF path. This does not check the path for validity.
+     *
+     * @param file PDF path
+     */
+    public final void setPDFPath(Path file) {
+        pdfPath.set(file);
+        storedPreferences.put("LAST_PDF_PATH", file.toAbsolutePath().toString());
+    }
+
+    /**
+     * Gets the code to use as the custom file attribute.
+     *
+     * @return code
+     */
+    public final String getCode() {
+        return code.get();
     }
 
     /**
@@ -46,14 +66,6 @@ public class ManualTagSettings {
         }
 
         this.code.set(code);
-    }
-
-    /**
-     * Gets the code to use as the custom file attribute.
-     *
-     * @return code
-     */
-    public final String getCode() {
-        return code.get();
+        storedPreferences.put("LAST_CODE", code);
     }
 }

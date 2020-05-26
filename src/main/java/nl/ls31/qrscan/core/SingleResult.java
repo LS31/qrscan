@@ -23,13 +23,6 @@ public class SingleResult {
     private int pageCount;
 
     /**
-     * Possible status reports for QR code scanned PDF files.
-     */
-    enum ResultStatus {
-        QR_CODE_FOUND, NO_FILE_ACCESS, NO_QR_CODE,
-    }
-
-    /**
      * @param pdf          the PDF file
      * @param resultStatus the ResultStatus after QR code scanning
      * @param qrCodePage   the page that was scanned
@@ -53,16 +46,6 @@ public class SingleResult {
         this.resultStatus = resultStatus;
         this.qrCodePage = qrCodePage;
         this.qrCode = qrCode;
-    }
-
-    /**
-     * Remembers the old and new file paths after renaming.
-     *
-     * @param outputFilePath the new file path
-     */
-    public void setOutputFilePath(Path outputFilePath) {
-        this.outputFilePath = outputFilePath;
-        this.isRenamed = true;
     }
 
     /**
@@ -112,6 +95,16 @@ public class SingleResult {
     }
 
     /**
+     * Remembers the old and new file paths after renaming.
+     *
+     * @param outputFilePath the new file path
+     */
+    public void setOutputFilePath(Path outputFilePath) {
+        this.outputFilePath = outputFilePath;
+        this.isRenamed = true;
+    }
+
+    /**
      * Gets the date and time this file was created, or an empty string if it could not be determined.
      *
      * @return creation time
@@ -145,5 +138,12 @@ public class SingleResult {
      */
     public ResultStatus getQrCodeScanStatus() {
         return resultStatus;
+    }
+
+    /**
+     * Possible status reports for QR code scanned PDF files.
+     */
+    enum ResultStatus {
+        QR_CODE_FOUND, NO_FILE_ACCESS, NO_QR_CODE,
     }
 }

@@ -3,6 +3,7 @@ package nl.ls31.qrscan.ui.view;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import nl.ls31.qrscan.App;
 import nl.ls31.qrscan.core.RenameTask;
@@ -55,6 +56,20 @@ public class ScanController {
     }
 
     /**
+     * Update all control states using the model as reference.
+     */
+    public void updateControlsByModel() {
+        inputDirTextField.setText(mainApp.getScanSettings().getInputDirectory().toAbsolutePath().toString());
+        targetDirTextField.setText(mainApp.getScanSettings().getTargetDirectory().toAbsolutePath().toString());
+        useFileAttributeCheckBox.setSelected(mainApp.getScanSettings().getUseFileAttributes());
+        writeFileAttributeCheckBox.setSelected(mainApp.getScanSettings().getWriteFileAttributes());
+        renameCheckBox.setSelected(mainApp.getScanSettings().getWithRenaming());
+        toggleRenaming();
+        openLogFileCheckBox.setSelected(mainApp.getScanSettings().getOpenLogFile());
+        qrPageSpinner.getValueFactory().setValue(mainApp.getScanSettings().getQRPage());
+    }
+
+    /**
      * Handles clicks to the input directory button by showing a file open dialog.
      */
     @FXML
@@ -64,8 +79,8 @@ public class ScanController {
         File dir = dirChooser.showDialog(mainApp.getPrimaryStage());
         if (dir != null) {
             // Change the text field and update the model.
-            inputDirTextField.setText(dir.toPath().toAbsolutePath().toString());
             mainApp.getScanSettings().setInputDirectory(dir.toPath());
+            inputDirTextField.setText(mainApp.getScanSettings().getInputDirectory().toAbsolutePath().toString());
         }
     }
 
@@ -79,8 +94,8 @@ public class ScanController {
         File dir = dirChooser.showDialog(mainApp.getPrimaryStage());
         if (dir != null) {
             // Change the text field and update the model.
-            targetDirTextField.setText(dir.toPath().toAbsolutePath().toString());
             mainApp.getScanSettings().setTargetDirectory(dir.toPath());
+            targetDirTextField.setText(mainApp.getScanSettings().getTargetDirectory().toAbsolutePath().toString());
         }
     }
 
@@ -114,8 +129,15 @@ public class ScanController {
      */
     @FXML
     private void handleRenameCheckBox() {
+        mainApp.getScanSettings().setWithRenaming(renameCheckBox.isSelected());
+        toggleRenaming();
+    }
+
+    /**
+     * Toggle a set of controls depending on whether or not we want to rename.
+     */
+    private void toggleRenaming() {
         boolean doRename = renameCheckBox.isSelected();
-        mainApp.getScanSettings().setWithRenaming(doRename);
         targetDirLabel.setDisable(!doRename);
         targetDirTextField.setDisable(!doRename);
         targetDirButton.setDisable(!doRename);
@@ -149,8 +171,25 @@ public class ScanController {
         } else {
             task = new ScanTask(inputDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         }
-        // Messages are passed into the log.
-        task.messageProperty().addListener((observable, oldValue, newValue) -> mainApp.log(newValue));
+
+        ProgressDialog pForm = new ProgressDialog("Processing...", task.progressProperty());
+        pForm.show();
+        scanButton.setDisable(true);
+
+        task.setOnSucceeded(event -> {
+            pForm.close();
+            scanButton.setDisable(false);
+        });
+
+        task.messageProperty().addListener((observable, oldValue, newValue) -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Task finished.");
+            alert.setHeaderText("Scanned and/or renamed PDF files.");
+            alert.setContentText(newValue);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+        });
+
         new Thread(task).start();
     }
 }
