@@ -30,6 +30,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                     <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0"/>
                     <RowConstraints/>
                 </rowConstraints>
                 <Label text="Input directory:"/>
@@ -38,7 +39,7 @@
                 <TextField fx:id="inputDirTextField" editable="false" focusTraversable="false"
                            GridPane.columnIndex="1"/>
                 <Button fx:id="scanButton" mnemonicParsing="false" onAction="#handleScanButton" prefWidth="150.0"
-                        text="Scan" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                        text="Scan" GridPane.columnIndex="2" GridPane.rowIndex="8">
                     <font>
                         <Font name="System Bold" size="12.0"/>
                     </font>
