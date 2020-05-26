@@ -31,8 +31,8 @@ public class QrPdf {
      * This custom file attribute is used to add the QR code to the PDF file meta data.
      */
     final static public String FILE_ATTRIBUTE = "custom.qrcode";
-    private Path docPath;
-    private Map<Integer, String> qrCodeMap;
+    private final Path docPath;
+    private final Map<Integer, String> qrCodeMap;
 
     /**
      * PDF file containing a QR code.

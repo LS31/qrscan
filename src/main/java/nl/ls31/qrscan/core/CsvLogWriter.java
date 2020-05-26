@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * This class provides a way to write a CSV file with a log of the scanned or renamed PDF files with QR codes.
+ * <p>
+ * TODO Migrate to Apache Open CSV implementation
  *
  * @author Lars Steggink
  */

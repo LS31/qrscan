@@ -3,7 +3,6 @@ package nl.ls31.qrscan.ui.view;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import nl.ls31.qrscan.App;
 import nl.ls31.qrscan.core.RenameTask;
@@ -172,22 +171,19 @@ public class ScanController {
             task = new ScanTask(inputDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         }
 
-        ProgressDialog pForm = new ProgressDialog("Processing...", task.progressProperty());
-        pForm.show();
+        ProgressDialog pDialog = new ProgressDialog("Processing...", task.progressProperty());
+        pDialog.show();
         scanButton.setDisable(true);
 
         task.setOnSucceeded(event -> {
-            pForm.close();
+            pDialog.close();
             scanButton.setDisable(false);
-        });
-
-        task.messageProperty().addListener((observable, oldValue, newValue) -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Task finished.");
-            alert.setHeaderText("Scanned and/or renamed PDF files.");
-            alert.setContentText(newValue);
-            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-            alert.showAndWait();
+            ResultsDialog rDialog = new ResultsDialog(
+                    task.getValue(),
+                    task instanceof RenameTask,
+                    task.getMessage());
+            rDialog.show();
+            // TODO Move code to create CSV log file here.
         });
 
         new Thread(task).start();

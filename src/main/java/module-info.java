@@ -9,5 +9,6 @@ module qrscan {
     requires java.prefs;
 
     opens nl.ls31.qrscan.ui.view to javafx.fxml;
+    opens nl.ls31.qrscan.core to javafx.base;
     exports nl.ls31.qrscan;
 }

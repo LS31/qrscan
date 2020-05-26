@@ -25,10 +25,10 @@ import java.util.Set;
 public class CreateTask extends Task<List<Path>> {
 
     final static private String LSEP = System.lineSeparator();
-    private Path inputFile;
-    private Path outputDir;
-    private int size;
-    private boolean withText;
+    private final Path inputFile;
+    private final Path outputDir;
+    private final int size;
+    private final boolean withText;
 
     /**
      * This task imports creates GIF image files displaying QR codes (with or without an human-readable annotation).

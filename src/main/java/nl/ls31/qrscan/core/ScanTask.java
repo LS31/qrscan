@@ -27,11 +27,11 @@ import java.util.List;
  */
 public class ScanTask extends Task<List<SingleResult>> {
     final static private String LSEP = System.lineSeparator();
-    protected Path inputDir;
-    private int qrCodePage;
-    private boolean writeFileAttributes;
-    private boolean useFileAttributes;
-    private boolean openLogFile;
+    protected final Path inputDir;
+    private final int qrCodePage;
+    private final boolean writeFileAttributes;
+    private final boolean useFileAttributes;
+    private final boolean openLogFile;
 
     /**
      * @param inputDir            Input directory with PDF files.
@@ -62,6 +62,8 @@ public class ScanTask extends Task<List<SingleResult>> {
 
     /**
      * Logs the results by logging to a CSV file.
+     * <p>
+     * TODO Move logging outside of task
      *
      * @param results Results from scanning.
      * @param dir     Directory to save CSV file into.

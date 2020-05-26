@@ -1,5 +1,9 @@
 package nl.ls31.qrscan.core;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -13,13 +17,14 @@ import java.nio.file.Path;
  */
 public class SingleResult {
 
-    private ResultStatus resultStatus;
-    private int qrCodePage;
-    private String qrCode;
-    private Path inputFilePath;
-    private Path outputFilePath;
+    private final SimpleObjectProperty<ResultStatus> resultStatus;
+    private final int qrCodePage;
+    private final SimpleStringProperty qrCode;
+
+    private final SimpleObjectProperty<Path> inputFilePath;
+    private final SimpleObjectProperty<Path> outputFilePath;
     private String creation;
-    private boolean isRenamed;
+    private final SimpleBooleanProperty isRenamed;
     private int pageCount;
 
     /**
@@ -29,9 +34,9 @@ public class SingleResult {
      * @param qrCode       the QR code, if found, otherwise ""
      */
     public SingleResult(QrPdf pdf, ResultStatus resultStatus, int qrCodePage, String qrCode) {
-        this.inputFilePath = pdf.getPath();
+        this.inputFilePath = new SimpleObjectProperty<>(pdf.getPath());
         this.outputFilePath = inputFilePath;
-        this.isRenamed = false;
+        this.isRenamed = new SimpleBooleanProperty(false);
         try {
             this.creation = pdf.getCreationTime().toString();
         } catch (IOException e) {
@@ -43,9 +48,9 @@ public class SingleResult {
         } catch (IOException e) {
             this.pageCount = -9;
         }
-        this.resultStatus = resultStatus;
+        this.resultStatus = new SimpleObjectProperty<>(resultStatus);
         this.qrCodePage = qrCodePage;
-        this.qrCode = qrCode;
+        this.qrCode = new SimpleStringProperty(qrCode);
     }
 
     /**
@@ -54,7 +59,7 @@ public class SingleResult {
      * @return whether a QR code was found
      */
     public boolean isQRCodeFound() {
-        return (resultStatus == ResultStatus.QR_CODE_FOUND);
+        return (resultStatus.get() == ResultStatus.QR_CODE_FOUND);
     }
 
     /**
@@ -63,7 +68,7 @@ public class SingleResult {
      * @return QR code
      */
     public String getQrCode() {
-        return qrCode;
+        return qrCode.get();
     }
 
     /**
@@ -72,7 +77,7 @@ public class SingleResult {
      * @return file path
      */
     public Path getInputFilePath() {
-        return inputFilePath;
+        return inputFilePath.get();
     }
 
     /**
@@ -81,7 +86,7 @@ public class SingleResult {
      * @return whether the file was renamed
      */
     public boolean isFileRenamed() {
-        return isRenamed;
+        return isRenamed.get();
     }
 
     /**
@@ -91,7 +96,7 @@ public class SingleResult {
      * @return output file path
      */
     public Path getOutputFilePath() {
-        return outputFilePath;
+        return outputFilePath.get();
     }
 
     /**
@@ -100,8 +105,8 @@ public class SingleResult {
      * @param outputFilePath the new file path
      */
     public void setOutputFilePath(Path outputFilePath) {
-        this.outputFilePath = outputFilePath;
-        this.isRenamed = true;
+        this.outputFilePath.set(outputFilePath);
+        this.isRenamed.set(true);
     }
 
     /**
@@ -137,6 +142,42 @@ public class SingleResult {
      * @return status
      */
     public ResultStatus getQrCodeScanStatus() {
+        return resultStatus.get();
+    }
+
+    /**
+     * Present a property object to use the input file path in JavaFX.
+     *
+     * @return input file path
+     */
+    public SimpleObjectProperty<Path> inputFilePathProperty() {
+        return inputFilePath;
+    }
+
+    /**
+     * Present a property object to use the renamed file path in JavaFX.
+     *
+     * @return renamed file path
+     */
+    public SimpleObjectProperty<Path> renamedFilePathProperty() {
+        return outputFilePath;
+    }
+
+    /**
+     * Present a property object to use the QR code in JavaFX.
+     *
+     * @return qr code
+     */
+    public SimpleStringProperty qrCodeProperty() {
+        return qrCode;
+    }
+
+    /**
+     * Present a property object to use the QR code status in JavaFX.
+     *
+     * @return qr code status report
+     */
+    public SimpleObjectProperty<ResultStatus> qrCodeStatusProperty() {
         return resultStatus;
     }
 
