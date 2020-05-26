@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -30,8 +29,6 @@ public class RootController {
     private MenuItem createItem;
     @FXML
     private MenuItem manualTagItem;
-    @FXML
-    private TextArea logTextArea;
 
     /**
      * Sets a call back reference to the main application.

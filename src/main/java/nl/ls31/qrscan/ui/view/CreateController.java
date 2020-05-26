@@ -110,9 +110,7 @@ public class CreateController {
         ProgressDialog pForm = new ProgressDialog("Creating files...", createTask.progressProperty());
         pForm.show();
 
-        createTask.setOnSucceeded(event -> {
-            pForm.close();
-        });
+        createTask.setOnSucceeded(event -> pForm.close());
 
         createTask.messageProperty().addListener((observable, oldValue, newValue) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
