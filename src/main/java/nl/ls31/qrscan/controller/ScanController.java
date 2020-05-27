@@ -62,9 +62,9 @@ public class ScanController {
     public void updateControlsByModel() {
         inputDirTextField.setText(mainApp.getAppSettings().getInputDirectory().toAbsolutePath().toString());
         targetDirTextField.setText(mainApp.getAppSettings().getTargetDirectory().toAbsolutePath().toString());
-        useFileAttributeCheckBox.setSelected(mainApp.getAppSettings().getUseFileAttributes());
-        writeFileAttributeCheckBox.setSelected(mainApp.getAppSettings().getWriteFileAttributes());
-        renameCheckBox.setSelected(mainApp.getAppSettings().getWithRenaming());
+        useFileAttributeCheckBox.setSelected(mainApp.getAppSettings().getUseFileAttribute());
+        writeFileAttributeCheckBox.setSelected(mainApp.getAppSettings().getWriteFileAttribute());
+        renameCheckBox.setSelected(mainApp.getAppSettings().getWithFileRenaming());
         toggleRenaming();
         openLogFileCheckBox.setSelected(mainApp.getAppSettings().getOpenLogFile());
         qrPageSpinner.getValueFactory().setValue(mainApp.getAppSettings().getQRPage());
@@ -105,7 +105,7 @@ public class ScanController {
      */
     @FXML
     private void handleUseFileAttributeCheckBox() {
-        mainApp.getAppSettings().setUseFileAttributes(useFileAttributeCheckBox.isSelected());
+        mainApp.getAppSettings().setUseFileAttribute(useFileAttributeCheckBox.isSelected());
     }
 
     /**
@@ -114,7 +114,7 @@ public class ScanController {
      */
     @FXML
     private void handleWriteFileAttributeCheckBox() {
-        mainApp.getAppSettings().setWriteFileAttributes(writeFileAttributeCheckBox.isSelected());
+        mainApp.getAppSettings().setWriteFileAttribute(writeFileAttributeCheckBox.isSelected());
     }
 
     /**
@@ -130,7 +130,7 @@ public class ScanController {
      */
     @FXML
     private void handleRenameCheckBox() {
-        mainApp.getAppSettings().setWithRenaming(renameCheckBox.isSelected());
+        mainApp.getAppSettings().setWithFileRenaming(renameCheckBox.isSelected());
         toggleRenaming();
     }
 
@@ -161,12 +161,12 @@ public class ScanController {
 
         Path inputDir = appSettings.getInputDirectory();
         int qrPage = appSettings.getQRPage();
-        boolean useFileAttributes = appSettings.getUseFileAttributes();
-        boolean writeFileAttributes = appSettings.getWriteFileAttributes();
+        boolean useFileAttributes = appSettings.getUseFileAttribute();
+        boolean writeFileAttributes = appSettings.getWriteFileAttribute();
         boolean openLogFile = appSettings.getOpenLogFile();
 
         Task<List<SingleResult>> task;
-        if (appSettings.getWithRenaming()) {
+        if (appSettings.getWithFileRenaming()) {
             Path targetDir = appSettings.getTargetDirectory();
             task = new RenameTask(inputDir, targetDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         } else {

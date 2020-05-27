@@ -10,75 +10,76 @@ import java.nio.file.Paths;
 import java.util.prefs.Preferences;
 
 /**
- * This model holds all settings set by the user.
+ * This model holds all settings set by the user in the application. Last used values are stored for future reference.
  *
  * @author Lars Steggink
  */
 public class AppSettings {
 
     private final Preferences storedSettings;
-    private final SimpleObjectProperty<Path> inputFile;
-    private final SimpleObjectProperty<Path> outputDir;
-    private final SimpleIntegerProperty imageSize;
-    private final SimpleBooleanProperty withAnnotation;
-    private final SimpleObjectProperty<Path> pdfPath;
-    private final SimpleStringProperty code;
-    private final SimpleObjectProperty<Path> inputDir;
-    private final SimpleObjectProperty<Path> targetDir;
-    private final SimpleIntegerProperty qrPage;
-    private final SimpleBooleanProperty withRenaming;
-    private final SimpleBooleanProperty useFileAttributes;
-    private final SimpleBooleanProperty writeFileAttributes;
+    private final SimpleObjectProperty<Path> codesInputFile;
+    private final SimpleObjectProperty<Path> qrcodeImageOutputDirectory;
+    private final SimpleIntegerProperty qrcodeImageSize;
+    private final SimpleBooleanProperty qrcodeImageWithAnnotation;
+    private final SimpleObjectProperty<Path> manualPdf;
+    private final SimpleStringProperty manualCode;
+    private final SimpleObjectProperty<Path> pdfInputDirectory;
+    private final SimpleObjectProperty<Path> pdfTargetDirectory;
+    private final SimpleIntegerProperty searchAtPage;
+    private final SimpleBooleanProperty withFileRenaming;
+    private final SimpleBooleanProperty useFileAttribute;
+    private final SimpleBooleanProperty writeFileAttribute;
     private final SimpleBooleanProperty openLogFile;
 
     public AppSettings() {
         storedSettings = Preferences.userNodeForPackage(this.getClass());
 
-        inputFile = new SimpleObjectProperty<>(Paths.get(storedSettings.get("LAST_INPUT_FILE", "")));
-        outputDir = new SimpleObjectProperty<>(Paths.get(storedSettings.get("LAST_OUTPUT_DIR", "")));
-        imageSize = new SimpleIntegerProperty(storedSettings.getInt("LAST_IMAGE_SIZE", 50));
-        withAnnotation = new SimpleBooleanProperty(storedSettings.getBoolean("LAST_WITH_ANNOTATION", true));
-        pdfPath = new SimpleObjectProperty<>(Paths.get(storedSettings.get("LAST_PDF_PATH", "")));
-        code = new SimpleStringProperty(storedSettings.get("LAST_CODE", ""));
-        inputDir = new SimpleObjectProperty<>(Paths.get(storedSettings.get("LAST_INPUT_DIR", "")));
-        targetDir = new SimpleObjectProperty<>(Paths.get(storedSettings.get("LAST_TARGET_DIR", "")));
-        qrPage = new SimpleIntegerProperty(storedSettings.getInt("LAST_QR_PAGE", 1));
-        withRenaming = new SimpleBooleanProperty(storedSettings.getBoolean("LAST_WITH_RENAMING", false));
-        useFileAttributes = new SimpleBooleanProperty(storedSettings.getBoolean("LAST_USE_FILE_ATTRIBUTES", true));
-        writeFileAttributes = new SimpleBooleanProperty(storedSettings.getBoolean("LAST_WRITE_FILE_ATTRIBUTES", true));
-        openLogFile = new SimpleBooleanProperty(storedSettings.getBoolean("LAST_OPEN_LOG_FILE", true));
+        codesInputFile = new SimpleObjectProperty<>(Paths.get(storedSettings.get("CODES_INPUT_FILE", "")));
+        qrcodeImageOutputDirectory = new SimpleObjectProperty<>(Paths.get(storedSettings.get("QRCODE_IMAGE_OUTPUT_DIR", "")));
+        qrcodeImageSize = new SimpleIntegerProperty(storedSettings.getInt("QRCODE_IMAGE_SIZE", 50));
+        qrcodeImageWithAnnotation = new SimpleBooleanProperty(storedSettings.getBoolean("QRCODE_IMAGE_WITH_ANNOTATION", true));
+        manualPdf = new SimpleObjectProperty<>(Paths.get(storedSettings.get("MANUAL_PDF", "")));
+        manualCode = new SimpleStringProperty(storedSettings.get("MANUAL_CODE", ""));
+        pdfInputDirectory = new SimpleObjectProperty<>(Paths.get(storedSettings.get("PDF_INPUT_DIRECTORY", "")));
+        pdfTargetDirectory = new SimpleObjectProperty<>(Paths.get(storedSettings.get("PDF_TARGET_DIRECTORY", "")));
+        searchAtPage = new SimpleIntegerProperty(storedSettings.getInt("SEARCH_AT_PAGE", 1));
+        withFileRenaming = new SimpleBooleanProperty(storedSettings.getBoolean("WITH_FILE_RENAMING", false));
+        useFileAttribute = new SimpleBooleanProperty(storedSettings.getBoolean("USE_FILE_ATTRIBUTE", true));
+        writeFileAttribute = new SimpleBooleanProperty(storedSettings.getBoolean("WRITE_FILE_ATTRIBUTE", true));
+        openLogFile = new SimpleBooleanProperty(storedSettings.getBoolean("OPEN_LOG_FILE", false));
     }
 
     /**
-     * Gets image size setting (in px).
+     * Gets the setting for image size (px) for the creation of new GIFs with QR codes.
      *
-     * @return image size
+     * @return image size (px)
      */
-    public final int getImageSize() {
-        return imageSize.get();
+    public final int getQrcodeImageSize() {
+        return qrcodeImageSize.get();
     }
 
     /**
-     * Sets the image size setting (in px).
+     * Sets the setting for image size (px) for the creation of new GIFs with QR codes.
      *
-     * @param size image size
+     * @param size image size (px)
      * @throws IllegalArgumentException if size was negative or zero
      */
-    public final void setImageSize(int size) {
+    public final void setQrcodeImageSize(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("Size is negative or zero.");
         }
-        this.imageSize.set(size);
-        storedSettings.putInt("LAST_IMAGE_SIZE", size);
+        this.qrcodeImageSize.set(size);
+        storedSettings.putInt("QRCODE_IMAGE_SIZE", size);
     }
 
     /**
-     * Gets the input file path setting. The path may be invalid and the file may not exist.
+     * Gets the input file path setting where a text file with requested QR codes can be found. This does not check the
+     * * validity of the path.
      *
      * @return input file path
      */
-    public final Path getInputFile() {
-        return inputFile.get();
+    public final Path getCodesInputFile() {
+        return codesInputFile.get();
     }
 
     /**
@@ -87,29 +88,30 @@ public class AppSettings {
      *
      * @param file input file path
      */
-    public final void setInputFile(Path file) {
-        inputFile.set(file);
-        storedSettings.put("LAST_INPUT_FILE", file.toAbsolutePath().toString());
+    public final void setCodesInputFile(Path file) {
+        codesInputFile.set(file);
+        storedSettings.put("CODES_INPUT_FILE", file.toAbsolutePath().toString());
     }
 
     /**
-     * Gets the output directory setting. The path may be invalid and the directory may not exist.
+     * Gets the setting for the output directory where the GIFs with QR codes will be saved. This does not check the validity of the
+     * path.
      *
      * @return output directory path
      */
-    public final Path getOutputDirectory() {
-        return outputDir.get();
+    public final Path getQrcodeImageOutputDirectory() {
+        return qrcodeImageOutputDirectory.get();
     }
 
     /**
-     * Sets the output directory path setting, where QR images will be stored. This does not check the validity of the
+     * Sets the setting for the output directory where the GIFs with QR codes will be saved. This does not check the validity of the
      * path.
      *
-     * @param directory directory path setting
+     * @param directory output directory path
      */
-    public final void setOutputDirectory(Path directory) {
-        outputDir.set(directory);
-        storedSettings.put("LAST_OUTPUT_DIR", directory.toAbsolutePath().toString());
+    public final void setQrcodeImageOutputDirectory(Path directory) {
+        qrcodeImageOutputDirectory.set(directory);
+        storedSettings.put("QRCODE_IMAGE_OUTPUT_DIR", directory.toAbsolutePath().toString());
     }
 
     /**
@@ -117,8 +119,8 @@ public class AppSettings {
      *
      * @return whether to add annotation
      */
-    public final boolean getWithAnnotation() {
-        return withAnnotation.get();
+    public final boolean getQrcodeImageWithAnnotation() {
+        return qrcodeImageWithAnnotation.get();
     }
 
     /**
@@ -126,28 +128,28 @@ public class AppSettings {
      *
      * @param withAnnotation whether to add annotation
      */
-    public final void setWithAnnotation(boolean withAnnotation) {
-        this.withAnnotation.set(withAnnotation);
-        storedSettings.putBoolean("LAST_WITH_ANNOTATION", withAnnotation);
+    public final void setQrcodeImageWithAnnotation(boolean withAnnotation) {
+        this.qrcodeImageWithAnnotation.set(withAnnotation);
+        storedSettings.putBoolean("QRCODE_IMAGE_WITH_ANNOTATION", withAnnotation);
     }
 
     /**
-     * Gets the PDF path. The path may not be valid.
+     * Gets the path to the PDF that will be manually tagged with a custom file attribute. This does not check the path for validity.
      *
      * @return PDF path
      */
-    public final Path getPDFPath() {
-        return pdfPath.get();
+    public final Path getManualPdf() {
+        return manualPdf.get();
     }
 
     /**
-     * Sets the PDF path. This does not check the path for validity.
+     * Sets the path to the PDF that will be manually tagged with a custom file attribute. This does not check the path for validity.
      *
      * @param file PDF path
      */
-    public final void setPDFPath(Path file) {
-        pdfPath.set(file);
-        storedSettings.put("LAST_PDF_PATH", file.toAbsolutePath().toString());
+    public final void setManualPdf(Path file) {
+        manualPdf.set(file);
+        storedSettings.put("MANUAL_PDF", file.toAbsolutePath().toString());
     }
 
     /**
@@ -155,8 +157,8 @@ public class AppSettings {
      *
      * @return code
      */
-    public final String getCode() {
-        return code.get();
+    public final String getManualCode() {
+        return manualCode.get();
     }
 
     /**
@@ -165,46 +167,46 @@ public class AppSettings {
      * @param code the code
      * @throws IllegalArgumentException if the provided code had invalid characters
      */
-    public final void setCode(String code) {
+    public final void setManualCode(String code) {
         if (!QrPdf.isValidQRCode(code)) {
             throw new IllegalArgumentException("Invalid characters in code.");
         }
 
-        this.code.set(code);
-        storedSettings.put("LAST_CODE", code);
+        this.manualCode.set(code);
+        storedSettings.put("MANUAL_CODE", code);
     }
 
 
     /**
-     * Gets the input directory path setting. The path may be invalid and the directory may not exist.
+     * Gets the input directory path for scanning and/or renaming of PDFs. This does not check the path for validity.
      *
      * @return input directory path
      */
     public final Path getInputDirectory() {
-        return inputDir.get();
+        return pdfInputDirectory.get();
     }
 
     /**
-     * Sets the input directory path. This does not check the path for validity.
+     * Sets the input directory path for scanning and/or renaming of PDFs. This does not check the path for validity.
      *
-     * @param path input directory path
+     * @param directory input directory path
      */
-    public final void setInputDirectory(Path path) {
-        this.inputDir.set(path);
-        storedSettings.put("LAST_INPUT_DIR", path.toAbsolutePath().toString());
+    public final void setInputDirectory(Path directory) {
+        this.pdfInputDirectory.set(directory);
+        storedSettings.put("PDF_INPUT_DIRECTORY", directory.toAbsolutePath().toString());
     }
 
     /**
-     * Gets the page number where the QR code should be, according to the user.
+     * Gets the page number where the QR code should be searched for, according to the user.
      *
      * @return page number
      */
     public final int getQRPage() {
-        return qrPage.get();
+        return searchAtPage.get();
     }
 
     /**
-     * Sets the page number where the QR code should be, according to the user.
+     * Sets the page number where the QR code should be searched for, according to the user.
      *
      * @param page the page number
      * @throws IllegalArgumentException if the page number is negative or zero
@@ -213,46 +215,46 @@ public class AppSettings {
         if (page < 1) {
             throw new IllegalArgumentException("Page is negative or zero.");
         }
-        this.qrPage.set(page);
-        storedSettings.putInt("LAST_QR_PAGE", page);
+        this.searchAtPage.set(page);
+        storedSettings.putInt("SEARCH_AT_PAGE", page);
     }
 
     /**
-     * Gets the target directory path setting. The path may be invalid and the directory may not exist.
+     * Gets the target directory path for renamed PDFs. This does not check the path for validity.
      *
      * @return target directory path
      */
     public final Path getTargetDirectory() {
-        return targetDir.get();
+        return pdfTargetDirectory.get();
     }
 
     /**
-     * Sets the target directory path. This does not check the path for validity.
+     * Sets the target directory path for renamed PDFs. This does not check the path for validity.
      *
-     * @param path target directory path
+     * @param directory target directory path
      */
-    public final void setTargetDirectory(Path path) {
-        this.targetDir.set(path);
-        storedSettings.put("LAST_TARGET_DIR", path.toAbsolutePath().toString());
+    public final void setTargetDirectory(Path directory) {
+        this.pdfTargetDirectory.set(directory);
+        storedSettings.put("PDF_TARGET_DIRECTORY", directory.toAbsolutePath().toString());
     }
 
     /**
-     * Gets whether the custom file attributes should be used to detect the QR code.
+     * Gets whether the custom file attributes should be used to detect a (QR) code.
      *
      * @return whether to use the custom file attributes
      */
-    public final boolean getUseFileAttributes() {
-        return useFileAttributes.getValue();
+    public final boolean getUseFileAttribute() {
+        return useFileAttribute.getValue();
     }
 
     /**
-     * Sets whether the custom file attributes should be used to detect the QR code.
+     * Sets whether the custom file attributes should be used to detect a (QR) code.
      *
-     * @param useFileAttributes whether to use the custom file attributes
+     * @param useFileAttribute whether to use the custom file attributes
      */
-    public final void setUseFileAttributes(boolean useFileAttributes) {
-        this.useFileAttributes.set(useFileAttributes);
-        storedSettings.putBoolean("LAST_USE_FILE_ATTRIBUTES", useFileAttributes);
+    public final void setUseFileAttribute(boolean useFileAttribute) {
+        this.useFileAttribute.set(useFileAttribute);
+        storedSettings.putBoolean("USE_FILE_ATTRIBUTE", useFileAttribute);
     }
 
     /**
@@ -260,18 +262,18 @@ public class AppSettings {
      *
      * @return whether to rename
      */
-    public final boolean getWithRenaming() {
-        return withRenaming.getValue();
+    public final boolean getWithFileRenaming() {
+        return withFileRenaming.getValue();
     }
 
     /**
      * Sets whether the PDF files should be renamed according to the found QR code.
      *
-     * @param withRenaming whether to rename
+     * @param withFileRenaming whether to rename
      */
-    public final void setWithRenaming(boolean withRenaming) {
-        this.withRenaming.set(withRenaming);
-        storedSettings.putBoolean("LAST_WITH_RENAMING", withRenaming);
+    public final void setWithFileRenaming(boolean withFileRenaming) {
+        this.withFileRenaming.set(withFileRenaming);
+        storedSettings.putBoolean("WITH_FILE_RENAMING", withFileRenaming);
     }
 
     /**
@@ -279,22 +281,22 @@ public class AppSettings {
      *
      * @return whether to write the custom file attributes
      */
-    public final boolean getWriteFileAttributes() {
-        return writeFileAttributes.getValue();
+    public final boolean getWriteFileAttribute() {
+        return writeFileAttribute.getValue();
     }
 
     /**
      * Sets whether the custom file attributes should be written when a QR code was detected.
      *
-     * @param writeFileAttributes whether to write the custom file attributes
+     * @param writeFileAttribute whether to write the custom file attributes
      */
-    public final void setWriteFileAttributes(boolean writeFileAttributes) {
-        this.writeFileAttributes.set(writeFileAttributes);
-        storedSettings.putBoolean("LAST_WRITE_FILE_ATTRIBUTES", writeFileAttributes);
+    public final void setWriteFileAttribute(boolean writeFileAttribute) {
+        this.writeFileAttribute.set(writeFileAttribute);
+        storedSettings.putBoolean("WRITE_FILE_ATTRIBUTE", writeFileAttribute);
     }
 
     /**
-     * Gets whether the CSV log file should be opened externally at the end.
+     * Gets whether the CSV log file should be opened externally at the end of scanning and/or renaming.
      *
      * @return whether to open the file
      */
@@ -303,12 +305,12 @@ public class AppSettings {
     }
 
     /**
-     * Sets whether to open the CSV log file after all operations.
+     * Sets whether to open the CSV log file at the end of scanning and/or renaming.
      *
      * @param openLogFile whether to open the file
      */
     public final void setOpenLogFile(boolean openLogFile) {
         this.openLogFile.set(openLogFile);
-        storedSettings.putBoolean("LAST_OPEN_LOG_FILE", openLogFile);
+        storedSettings.putBoolean("OPEN_LOG_FILE", openLogFile);
     }
 }

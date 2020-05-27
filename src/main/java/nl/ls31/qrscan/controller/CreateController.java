@@ -51,10 +51,10 @@ public class CreateController {
      * Update all control states using the model as reference.
      */
     public void updateControlsByModel() {
-        inputFileTextField.setText(mainApp.getAppSettings().getInputFile().toAbsolutePath().toString());
-        outputDirTextField.setText(mainApp.getAppSettings().getOutputDirectory().toAbsolutePath().toString());
-        annotationCheckBox.setSelected(mainApp.getAppSettings().getWithAnnotation());
-        sizeSpinner.getValueFactory().setValue(mainApp.getAppSettings().getImageSize());
+        inputFileTextField.setText(mainApp.getAppSettings().getCodesInputFile().toAbsolutePath().toString());
+        outputDirTextField.setText(mainApp.getAppSettings().getQrcodeImageOutputDirectory().toAbsolutePath().toString());
+        annotationCheckBox.setSelected(mainApp.getAppSettings().getQrcodeImageWithAnnotation());
+        sizeSpinner.getValueFactory().setValue(mainApp.getAppSettings().getQrcodeImageSize());
     }
 
     /**
@@ -68,7 +68,7 @@ public class CreateController {
         if (file != null) {
             // Change the text field and update the model.
             inputFileTextField.setText(file.toPath().toAbsolutePath().toString());
-            mainApp.getAppSettings().setInputFile(file.toPath());
+            mainApp.getAppSettings().setCodesInputFile(file.toPath());
         }
     }
 
@@ -83,7 +83,7 @@ public class CreateController {
         if (dir != null) {
             // Change the text field and update the model.
             outputDirTextField.setText(dir.toPath().toAbsolutePath().toString());
-            mainApp.getAppSettings().setOutputDirectory(dir.toPath());
+            mainApp.getAppSettings().setQrcodeImageOutputDirectory(dir.toPath());
         }
     }
 
@@ -92,7 +92,7 @@ public class CreateController {
      */
     @FXML
     private void handleAnnotationCheckBox() {
-        mainApp.getAppSettings().setWithAnnotation(annotationCheckBox.isSelected());
+        mainApp.getAppSettings().setQrcodeImageWithAnnotation(annotationCheckBox.isSelected());
     }
 
     /**
@@ -100,11 +100,11 @@ public class CreateController {
      */
     @FXML
     private void handleCreateButton() {
-        Path inputFile = mainApp.getAppSettings().getInputFile();
-        Path outputDir = mainApp.getAppSettings().getOutputDirectory();
-        boolean withAnnotation = mainApp.getAppSettings().getWithAnnotation();
-        mainApp.getAppSettings().setImageSize(sizeSpinner.getValue());
-        int size = mainApp.getAppSettings().getImageSize();
+        Path inputFile = mainApp.getAppSettings().getCodesInputFile();
+        Path outputDir = mainApp.getAppSettings().getQrcodeImageOutputDirectory();
+        boolean withAnnotation = mainApp.getAppSettings().getQrcodeImageWithAnnotation();
+        mainApp.getAppSettings().setQrcodeImageSize(sizeSpinner.getValue());
+        int size = mainApp.getAppSettings().getQrcodeImageSize();
 
         Task<List<Path>> createTask = new CreateTask(inputFile, outputDir, size, withAnnotation);
 

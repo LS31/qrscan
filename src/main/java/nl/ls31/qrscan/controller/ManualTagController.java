@@ -60,7 +60,7 @@ public class ManualTagController {
         if (file != null) {
             // Change the text field and update the model.
             pdfPathField.setText(file.toPath().toAbsolutePath().toString());
-            mainApp.getAppSettings().setPDFPath(file.toPath());
+            mainApp.getAppSettings().setManualPdf(file.toPath());
         }
     }
 
@@ -70,7 +70,7 @@ public class ManualTagController {
     @FXML
     private void handleTagButton() {
         try {
-            mainApp.getAppSettings().setCode(codeField.getText());
+            mainApp.getAppSettings().setManualCode(codeField.getText());
             tagFile();
         } catch (IllegalArgumentException e) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -95,11 +95,11 @@ public class ManualTagController {
      */
     private void tagFile() {
         AppSettings settings = mainApp.getAppSettings();
-        QrPdf pdf = new QrPdf(settings.getPDFPath());
+        QrPdf pdf = new QrPdf(settings.getManualPdf());
         try {
-            pdf.setQRCodeFileAttribute(settings.getCode());
-            String message = "Successfully tagged " + settings.getPDFPath().getFileName().toString() + " with code "
-                    + settings.getCode() + ". ";
+            pdf.setQRCodeFileAttribute(settings.getManualCode());
+            String message = "Successfully tagged " + settings.getManualPdf().getFileName().toString() + " with code "
+                    + settings.getManualCode() + ". ";
             Logger.info(message);
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Task finished.");
@@ -121,7 +121,7 @@ public class ManualTagController {
     }
 
     public void updateControlsByModel() {
-        pdfPathField.setText(mainApp.getAppSettings().getPDFPath().toAbsolutePath().toString());
-        codeField.setText(mainApp.getAppSettings().getCode());
+        pdfPathField.setText(mainApp.getAppSettings().getManualPdf().toAbsolutePath().toString());
+        codeField.setText(mainApp.getAppSettings().getManualCode());
     }
 }
