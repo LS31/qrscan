@@ -5,10 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import nl.ls31.qrscan.MainApp;
-import nl.ls31.qrscan.core.RenameTask;
-import nl.ls31.qrscan.core.ScanTask;
+import nl.ls31.qrscan.core.RenamePdfsTask;
+import nl.ls31.qrscan.core.ScanPdfsTask;
 import nl.ls31.qrscan.model.AppSettings;
-import nl.ls31.qrscan.model.SingleResult;
+import nl.ls31.qrscan.model.PdfScanResult;
 import nl.ls31.qrscan.view.ProgressDialog;
 import nl.ls31.qrscan.view.ResultsDialog;
 
@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author Lars Steggink
  */
-public class ScanController {
+public class ScanPdfsController {
 
     private MainApp mainApp;
     @FXML
@@ -165,12 +165,12 @@ public class ScanController {
         boolean writeFileAttributes = appSettings.getWriteFileAttribute();
         boolean openLogFile = appSettings.getOpenLogFile();
 
-        Task<List<SingleResult>> task;
+        Task<List<PdfScanResult>> task;
         if (appSettings.getWithFileRenaming()) {
             Path targetDir = appSettings.getTargetDirectory();
-            task = new RenameTask(inputDir, targetDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
+            task = new RenamePdfsTask(inputDir, targetDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         } else {
-            task = new ScanTask(inputDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
+            task = new ScanPdfsTask(inputDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         }
 
         ProgressDialog pDialog = new ProgressDialog("Processing...", task.progressProperty());
@@ -182,7 +182,7 @@ public class ScanController {
             scanButton.setDisable(false);
             ResultsDialog rDialog = new ResultsDialog(
                     task.getValue(),
-                    task instanceof RenameTask,
+                    task instanceof RenamePdfsTask,
                     task.getMessage());
             rDialog.show();
             // TODO Move code to create CSV log file here.

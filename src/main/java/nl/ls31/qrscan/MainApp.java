@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import nl.ls31.qrscan.controller.RootController;
-import nl.ls31.qrscan.controller.ScanController;
+import nl.ls31.qrscan.controller.ScanPdfsController;
 import nl.ls31.qrscan.model.AppSettings;
 import org.tinylog.Logger;
 
@@ -67,7 +67,7 @@ public class MainApp extends Application {
 
         // Load layouts from FXML file.
         FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/RootLayout.fxml"));
-        FXMLLoader scanViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/ScanView.fxml"));
+        FXMLLoader scanViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/ScanPdfsView.fxml"));
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
@@ -85,8 +85,8 @@ public class MainApp extends Application {
         } catch (IOException e) {
             Logger.error(e, "Scan layout not found.");
         }
-        ScanController scanController = scanViewLoader.getController();
-        scanController.setMainApp(this);
-        scanController.updateControlsByModel();
+        ScanPdfsController scanPdfsController = scanViewLoader.getController();
+        scanPdfsController.setMainApp(this);
+        scanPdfsController.updateControlsByModel();
     }
 }

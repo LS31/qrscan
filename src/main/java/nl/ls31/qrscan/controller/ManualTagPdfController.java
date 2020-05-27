@@ -10,8 +10,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import nl.ls31.qrscan.MainApp;
+import nl.ls31.qrscan.core.PdfScanner;
 import nl.ls31.qrscan.model.AppSettings;
-import nl.ls31.qrscan.model.QrPdf;
 import org.tinylog.Logger;
 
 import java.io.File;
@@ -23,7 +23,7 @@ import java.io.IOException;
  *
  * @author Lars Steggink
  */
-public class ManualTagController {
+public class ManualTagPdfController {
 
     private MainApp mainApp;
     @FXML
@@ -41,7 +41,7 @@ public class ManualTagController {
     @FXML
     private void handleCodeFieldEdit() {
         String userInput = codeField.getText();
-        if (QrPdf.isValidQRCode(userInput)) {
+        if (PdfScanner.isValidQRCode(userInput)) {
             codeField.setStyle("-fx-border-color: green; -fx-border-width: 2px ;");
         } else {
             codeField.setStyle("-fx-border-color: red; -fx-border-width: 2px ;");
@@ -95,7 +95,7 @@ public class ManualTagController {
      */
     private void tagFile() {
         AppSettings settings = mainApp.getAppSettings();
-        QrPdf pdf = new QrPdf(settings.getManualPdf());
+        PdfScanner pdf = new PdfScanner(settings.getManualPdf());
         try {
             pdf.setQRCodeFileAttribute(settings.getManualCode());
             String message = "Successfully tagged " + settings.getManualPdf().getFileName().toString() + " with code "

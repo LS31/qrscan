@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import nl.ls31.qrscan.core.PdfScanner;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -168,7 +169,7 @@ public class AppSettings {
      * @throws IllegalArgumentException if the provided code had invalid characters
      */
     public final void setManualCode(String code) {
-        if (!QrPdf.isValidQRCode(code)) {
+        if (!PdfScanner.isValidQRCode(code)) {
             throw new IllegalArgumentException("Invalid characters in code.");
         }
 

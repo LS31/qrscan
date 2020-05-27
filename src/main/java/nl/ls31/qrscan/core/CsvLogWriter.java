@@ -1,6 +1,6 @@
 package nl.ls31.qrscan.core;
 
-import nl.ls31.qrscan.model.SingleResult;
+import nl.ls31.qrscan.model.PdfScanResult;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class CsvLogWriter {
      * @param logFilePath path where the CSV file should be created
      * @throws IOException if unable to save the log file
      */
-    public static void writeLogFile(List<SingleResult> results, Path logFilePath) throws IOException {
+    public static void writeLogFile(List<PdfScanResult> results, Path logFilePath) throws IOException {
         String logContent = createLogContent(results);
         try (BufferedWriter logOut = Files.newBufferedWriter(logFilePath)) {
             logOut.write(logContent);
@@ -41,14 +41,14 @@ public class CsvLogWriter {
      * @param results results of scanning and renaming
      * @return log contents
      */
-    private static String createLogContent(List<SingleResult> results) {
+    private static String createLogContent(List<PdfScanResult> results) {
         StringBuilder csvBuffer = new StringBuilder();
 
         // CSV header
         csvBuffer.append("InputPath" + SEP + "RenamedPath" + SEP + "FileCreated" + SEP + "PageCount" + SEP + "QRCodeFound" + SEP + "QRCodePage" + SEP + "QRcode").append(LSEP);
 
         // CSV content: one line for every result
-        for (SingleResult result : results) {
+        for (PdfScanResult result : results) {
             csvBuffer.append(QUOTE).append(result.getInputFilePath().toAbsolutePath().toString()).append(QUOTE).append(SEP);
             if (result.isFileRenamed()) {
                 csvBuffer.append(QUOTE).append(result.getOutputFilePath().toAbsolutePath().toString()).append(QUOTE).append(SEP);

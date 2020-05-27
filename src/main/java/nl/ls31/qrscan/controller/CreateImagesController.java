@@ -8,7 +8,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import nl.ls31.qrscan.MainApp;
-import nl.ls31.qrscan.core.CreateTask;
+import nl.ls31.qrscan.core.CreateImagesTask;
 import nl.ls31.qrscan.view.ProgressDialog;
 
 import java.io.File;
@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author Lars Steggink
  */
-public class CreateController {
+public class CreateImagesController {
 
     private MainApp mainApp;
     @FXML
@@ -106,7 +106,7 @@ public class CreateController {
         mainApp.getAppSettings().setQrcodeImageSize(sizeSpinner.getValue());
         int size = mainApp.getAppSettings().getQrcodeImageSize();
 
-        Task<List<Path>> createTask = new CreateTask(inputFile, outputDir, size, withAnnotation);
+        Task<List<Path>> createTask = new CreateImagesTask(inputFile, outputDir, size, withAnnotation);
 
         ProgressDialog pForm = new ProgressDialog("Creating files...", createTask.progressProperty());
         pForm.show();

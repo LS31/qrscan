@@ -20,15 +20,9 @@ import java.io.IOException;
  */
 public class RootController {
 
-    @FXML
-    private MenuItem exitItem;
     private MainApp mainApp;
     @FXML
-    private MenuItem aboutItem;
-    @FXML
-    private MenuItem createItem;
-    @FXML
-    private MenuItem manualTagItem;
+    private MenuItem exitItem, manualTagItem, createItem, aboutItem;
 
     /**
      * Sets a call back reference to the main application.
@@ -54,7 +48,7 @@ public class RootController {
     public void handleAboutItem() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("About QRScan");
-        alert.setHeaderText("QRScan version 2.1.0");
+        alert.setHeaderText("QRScan version 2.2.0");
         alert.setContentText("A big thanks to the following frameworks: "
                 + "PDFBox by The Apache Software Foundation (Apache license v2.0), "
                 + "Java Advanced Imaging Image I/O Tools API (BSD licence), "
@@ -70,14 +64,14 @@ public class RootController {
         try {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            FXMLLoader createViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/CreateView.fxml"));
+            FXMLLoader createViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/CreateImagesView.fxml"));
             AnchorPane createView = createViewLoader.load();
             stage.setScene(new Scene(createView));
 
             // Give the controllers access to the main app.
-            CreateController createController = createViewLoader.getController();
-            createController.setMainApp(mainApp);
-            createController.updateControlsByModel();
+            CreateImagesController createImagesController = createViewLoader.getController();
+            createImagesController.setMainApp(mainApp);
+            createImagesController.updateControlsByModel();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -92,14 +86,14 @@ public class RootController {
         try {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            FXMLLoader manualTagViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/ManualTagView.fxml"));
+            FXMLLoader manualTagViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/ManualTagPdfView.fxml"));
             AnchorPane manualTagView = manualTagViewLoader.load();
             stage.setScene(new Scene(manualTagView));
 
             // Give the controllers access to the main app.
-            ManualTagController manualTagController = manualTagViewLoader.getController();
-            manualTagController.setMainApp(mainApp);
-            manualTagController.updateControlsByModel();
+            ManualTagPdfController manualTagPdfController = manualTagViewLoader.getController();
+            manualTagPdfController.setMainApp(mainApp);
+            manualTagPdfController.updateControlsByModel();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

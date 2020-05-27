@@ -1,7 +1,6 @@
 package nl.ls31.qrscan.core;
 
-import nl.ls31.qrscan.model.QrPdf;
-import nl.ls31.qrscan.model.SingleResult;
+import nl.ls31.qrscan.model.PdfScanResult;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 /**
- * This task performs the thing mentioned in ScanTask. However, after all PDFs are scanned for QR codes, the PDFs are
+ * This task performs the thing mentioned in ScanPdfsTask. However, after all PDFs are scanned for QR codes, the PDFs are
  * then moved to the output directory and renamed.
  *
  * <p>
@@ -34,14 +33,14 @@ import java.util.List;
  *
  * @author Lars Steggink
  */
-public class RenameTask extends ScanTask {
+public class RenamePdfsTask extends ScanPdfsTask {
 
     final static private String LSEP = System.lineSeparator();
     private final Path outputDir;
 
     /**
-     * This task performs the thing mentioned in ScanTask. However, after all PDFs are scanned for QR codes, the PDFs
-     * are then moved to the output directory and renamed.
+     * This task performs the thing mentioned in ScanPdfsTask. However, after all PDFs are scanned for QR codes, the
+     * PDFs are then moved to the output directory and renamed.
      *
      * @param inputDir            input directory with PDF files
      * @param outputDir           main output directory for renamed PDF files
@@ -51,11 +50,13 @@ public class RenameTask extends ScanTask {
      *                            scanning
      * @param openLogFile         whether to open the CSV log file at the end
      */
-    public RenameTask(Path inputDir, Path outputDir, int qrCodePage, boolean useFileAttributes,
-                      boolean writeFileAttributes, boolean openLogFile) {
+    public RenamePdfsTask(Path inputDir, Path outputDir, int qrCodePage, boolean useFileAttributes,
+                          boolean writeFileAttributes, boolean openLogFile) {
         super(inputDir, qrCodePage, useFileAttributes, writeFileAttributes, openLogFile);
         this.outputDir = outputDir;
     }
+
+    // TODO extract PdfFileRenamer (putting the logic of renaming and creating subdirs outside of this task)
 
     /**
      * Iterates over every file, scans for QR codes, then renames.
@@ -67,12 +68,12 @@ public class RenameTask extends ScanTask {
      * @return list of results
      */
     @Override
-    protected List<SingleResult> call() {
-        List<QrPdf> pdfs = findInputFiles(inputDir);
-        List<SingleResult> scanResults = scanInputFiles(pdfs);
+    protected List<PdfScanResult> call() {
+        List<PdfScanner> pdfs = findInputFiles(inputDir);
+        List<PdfScanResult> scanResults = scanInputFiles(pdfs);
         try {
-            List<SingleResult> results = renameScanResults(scanResults);
-            logResults(results, outputDir);
+            List<PdfScanResult> results = renameScanResults(scanResults);
+            logResults(results, outputDir); // TODO put this outside of task
             return results;
         } catch (IOException e) {
             Logger.error("!Unable to create or use output path.");
@@ -87,7 +88,7 @@ public class RenameTask extends ScanTask {
      * @return chosen path
      * @throws IOException if unable to create sub directory
      */
-    private Path findTargetPath(SingleResult scanResult) throws IOException {
+    private Path findTargetPath(PdfScanResult scanResult) throws IOException {
         String qr = scanResult.getQrCode();
 
         // Create sub directory within main output directory.
@@ -116,7 +117,7 @@ public class RenameTask extends ScanTask {
      * @return updated scan results, including the old and new file path
      * @throws IOException if unable to create or use output directory
      */
-    private List<SingleResult> renameScanResults(List<SingleResult> scanResults) throws IOException {
+    private List<PdfScanResult> renameScanResults(List<PdfScanResult> scanResults) throws IOException {
         int fileCount = scanResults.size();
         int success = 0;
         int failed = 0;
@@ -132,7 +133,7 @@ public class RenameTask extends ScanTask {
         }
 
         // Iterate over every scanned file.
-        for (SingleResult scanResult : scanResults) {
+        for (PdfScanResult scanResult : scanResults) {
             current++;
             updateProgress(current, fileCount);
 

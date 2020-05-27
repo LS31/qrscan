@@ -12,21 +12,21 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import nl.ls31.qrscan.model.SingleResult;
+import nl.ls31.qrscan.model.PdfScanResult;
 
 import java.util.List;
 
 /**
- * A dialog window with the results of a ScanTask or RenameTask.
+ * A dialog window with the results of a ScanPdfsTask or RenamePdfsTask.
  */
 public class ResultsDialog {
     private final Stage dialogStage;
 
     /**
-     * A dialog window with the results of a ScanTask or RenameTask.
+     * A dialog window with the results of a ScanPdfsTask or RenamePdfsTask.
      */
-    public ResultsDialog(List<SingleResult> results, boolean showRenamedColumn, String summary) {
-        ObservableList<SingleResult> resultList = FXCollections.observableArrayList(results);
+    public ResultsDialog(List<PdfScanResult> results, boolean showRenamedColumn, String summary) {
+        ObservableList<PdfScanResult> resultList = FXCollections.observableArrayList(results);
 
         dialogStage = new Stage();
         dialogStage.initStyle(StageStyle.DECORATED);
@@ -37,25 +37,25 @@ public class ResultsDialog {
         dialogStage.setTitle("Result overview");
 
         final Label label = new Label(summary);
-        TableView<SingleResult> table = new TableView<>();
+        TableView<PdfScanResult> table = new TableView<>();
 
-        TableColumn<SingleResult, String> inputPathCol = new TableColumn<>("File path");
+        TableColumn<PdfScanResult, String> inputPathCol = new TableColumn<>("File path");
         inputPathCol.setMinWidth(400);
         inputPathCol.setCellValueFactory(new PropertyValueFactory<>("inputFilePath"));
         inputPathCol.setSortType(TableColumn.SortType.DESCENDING);
 
-        TableColumn<SingleResult, String> renamedPathCol = new TableColumn<>("Renamed file path");
+        TableColumn<PdfScanResult, String> renamedPathCol = new TableColumn<>("Renamed file path");
         renamedPathCol.setVisible(showRenamedColumn);
         renamedPathCol.setMinWidth(400);
         renamedPathCol.setCellValueFactory(new PropertyValueFactory<>("renamedFilePath"));
         renamedPathCol.setSortType(TableColumn.SortType.DESCENDING);
 
-        TableColumn<SingleResult, String> qrCodeStatusCol = new TableColumn<>("QR code status");
+        TableColumn<PdfScanResult, String> qrCodeStatusCol = new TableColumn<>("QR code status");
         qrCodeStatusCol.setMinWidth(40);
         qrCodeStatusCol.setCellValueFactory(new PropertyValueFactory<>("qrCodeStatus"));
         renamedPathCol.setSortType(TableColumn.SortType.DESCENDING);
 
-        TableColumn<SingleResult, String> qrCodeCol = new TableColumn<>("QR code");
+        TableColumn<PdfScanResult, String> qrCodeCol = new TableColumn<>("QR code");
         qrCodeCol.setMinWidth(60);
         qrCodeCol.setCellValueFactory(new PropertyValueFactory<>("qrCode"));
         renamedPathCol.setSortType(TableColumn.SortType.DESCENDING);

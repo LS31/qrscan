@@ -2,7 +2,6 @@ package nl.ls31.qrscan.core;
 
 import com.google.zxing.WriterException;
 import javafx.concurrent.Task;
-import nl.ls31.qrscan.model.QrPdf;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ import java.util.Set;
  *
  * @author Lars Steggink
  */
-public class CreateTask extends Task<List<Path>> {
+public class CreateImagesTask extends Task<List<Path>> {
 
     final static private String LSEP = System.lineSeparator();
     private final Path inputFile;
@@ -40,7 +39,7 @@ public class CreateTask extends Task<List<Path>> {
      *                  annotation is requested.
      * @param withText  whether the code should be placed as regular text below the QR code
      */
-    public CreateTask(Path inputFile, Path outputDir, int size, boolean withText) {
+    public CreateImagesTask(Path inputFile, Path outputDir, int size, boolean withText) {
         this.inputFile = inputFile;
         this.outputDir = outputDir;
         this.size = size;
@@ -80,7 +79,7 @@ public class CreateTask extends Task<List<Path>> {
         List<Path> imageList = new ArrayList<>();
         for (String code : codeList) {
             updateProgress(++current, allCodes);
-            if (!QrPdf.isValidQRCode(code)) {
+            if (!PdfScanner.isValidQRCode(code)) {
                 Logger.warn("Skipped code " + code + " with illegal characters. ");
                 illegal++;
                 continue;
@@ -151,7 +150,7 @@ public class CreateTask extends Task<List<Path>> {
     private Path createImage(String code, Path outputDir)
             throws WriterException, IOException {
         Path imagePath = outputDir.resolve(code + ".gif");
-        QrImageWriter.writeGIF(imagePath, code, size, withText);
+        QrcodeImageWriter.writeGIF(imagePath, code, size, withText);
         return imagePath;
     }
 }

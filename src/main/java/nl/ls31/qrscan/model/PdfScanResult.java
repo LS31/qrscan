@@ -3,19 +3,23 @@ package nl.ls31.qrscan.model;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import nl.ls31.qrscan.core.PdfScanner;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
 /**
- * In a SingleResult, meta data about QR-PDFs is stored: i.e. the file name (and, after renaming the old and new file
+ * In a PdfScanResult, meta data about QR-PDFs is stored: i.e. the file name (and, after renaming the old and new file
  * name), number of pages in the PDF, if a QR code was found, what it was and on which page it was found.
  * <p>
- * Note: the QrPdf itself is not stored in the result.
+ * Note: the PdfScanner itself is not stored in the result.
  *
  * @author Lars Steggink
  */
-public class SingleResult {
+public class PdfScanResult {
+
+    // TODO: remove 'actions' from this class, make it more passive.
+    // TODO: extract a PdfRenameResult as a subclass of this one.
 
     private final SimpleObjectProperty<ResultStatus> resultStatus;
     private final int qrCodePage;
@@ -33,7 +37,7 @@ public class SingleResult {
      * @param qrCodePage   the page that was scanned
      * @param qrCode       the QR code, if found, otherwise ""
      */
-    public SingleResult(QrPdf pdf, ResultStatus resultStatus, int qrCodePage, String qrCode) {
+    public PdfScanResult(PdfScanner pdf, ResultStatus resultStatus, int qrCodePage, String qrCode) {
         this.inputFilePath = new SimpleObjectProperty<>(pdf.getPath());
         this.outputFilePath = inputFilePath;
         this.isRenamed = new SimpleBooleanProperty(false);
