@@ -2,6 +2,8 @@ package nl.ls31.qrscan.core;
 
 import com.google.zxing.NotFoundException;
 import javafx.concurrent.Task;
+import nl.ls31.qrscan.model.QrPdf;
+import nl.ls31.qrscan.model.SingleResult;
 import org.tinylog.Logger;
 
 import java.awt.*;

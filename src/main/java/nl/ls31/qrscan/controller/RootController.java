@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.ui.view;
+package nl.ls31.qrscan.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import nl.ls31.qrscan.App;
+import nl.ls31.qrscan.MainApp;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ public class RootController {
 
     @FXML
     private MenuItem exitItem;
-    private App mainApp;
+    private MainApp mainApp;
     @FXML
     private MenuItem aboutItem;
     @FXML
@@ -35,7 +35,7 @@ public class RootController {
      *
      * @param mainApp main application
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -70,7 +70,7 @@ public class RootController {
         try {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            FXMLLoader createViewLoader = new FXMLLoader(App.class.getResource("/fxml/CreateView.fxml"));
+            FXMLLoader createViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/CreateView.fxml"));
             AnchorPane createView = createViewLoader.load();
             stage.setScene(new Scene(createView));
 
@@ -92,7 +92,7 @@ public class RootController {
         try {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            FXMLLoader manualTagViewLoader = new FXMLLoader(App.class.getResource("/fxml/ManualTagView.fxml"));
+            FXMLLoader manualTagViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/ManualTagView.fxml"));
             AnchorPane manualTagView = manualTagViewLoader.load();
             stage.setScene(new Scene(manualTagView));
 

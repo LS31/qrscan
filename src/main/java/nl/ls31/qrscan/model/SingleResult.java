@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.core;
+package nl.ls31.qrscan.model;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -184,7 +184,7 @@ public class SingleResult {
     /**
      * Possible status reports for QR code scanned PDF files.
      */
-    enum ResultStatus {
+    public enum ResultStatus {
         QR_CODE_FOUND, NO_FILE_ACCESS, NO_QR_CODE,
     }
 }

@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.ui.view;
+package nl.ls31.qrscan.view;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.Pos;

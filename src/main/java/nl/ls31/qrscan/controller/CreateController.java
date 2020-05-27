@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.ui.view;
+package nl.ls31.qrscan.controller;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -7,8 +7,9 @@ import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import nl.ls31.qrscan.App;
+import nl.ls31.qrscan.MainApp;
 import nl.ls31.qrscan.core.CreateTask;
+import nl.ls31.qrscan.view.ProgressDialog;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class CreateController {
 
-    private App mainApp;
+    private MainApp mainApp;
     @FXML
     private TextField inputFileTextField;
     @FXML
@@ -42,7 +43,7 @@ public class CreateController {
      *
      * @param mainApp the main application
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -50,10 +51,10 @@ public class CreateController {
      * Update all control states using the model as reference.
      */
     public void updateControlsByModel() {
-        inputFileTextField.setText(mainApp.getCreateSettings().getInputFile().toAbsolutePath().toString());
-        outputDirTextField.setText(mainApp.getCreateSettings().getOutputDirectory().toAbsolutePath().toString());
-        annotationCheckBox.setSelected(mainApp.getCreateSettings().getWithAnnotation());
-        sizeSpinner.getValueFactory().setValue(mainApp.getCreateSettings().getImageSize());
+        inputFileTextField.setText(mainApp.getAppSettings().getInputFile().toAbsolutePath().toString());
+        outputDirTextField.setText(mainApp.getAppSettings().getOutputDirectory().toAbsolutePath().toString());
+        annotationCheckBox.setSelected(mainApp.getAppSettings().getWithAnnotation());
+        sizeSpinner.getValueFactory().setValue(mainApp.getAppSettings().getImageSize());
     }
 
     /**
@@ -67,7 +68,7 @@ public class CreateController {
         if (file != null) {
             // Change the text field and update the model.
             inputFileTextField.setText(file.toPath().toAbsolutePath().toString());
-            mainApp.getCreateSettings().setInputFile(file.toPath());
+            mainApp.getAppSettings().setInputFile(file.toPath());
         }
     }
 
@@ -82,7 +83,7 @@ public class CreateController {
         if (dir != null) {
             // Change the text field and update the model.
             outputDirTextField.setText(dir.toPath().toAbsolutePath().toString());
-            mainApp.getCreateSettings().setOutputDirectory(dir.toPath());
+            mainApp.getAppSettings().setOutputDirectory(dir.toPath());
         }
     }
 
@@ -91,7 +92,7 @@ public class CreateController {
      */
     @FXML
     private void handleAnnotationCheckBox() {
-        mainApp.getCreateSettings().setWithAnnotation(annotationCheckBox.isSelected());
+        mainApp.getAppSettings().setWithAnnotation(annotationCheckBox.isSelected());
     }
 
     /**
@@ -99,11 +100,11 @@ public class CreateController {
      */
     @FXML
     private void handleCreateButton() {
-        Path inputFile = mainApp.getCreateSettings().getInputFile();
-        Path outputDir = mainApp.getCreateSettings().getOutputDirectory();
-        boolean withAnnotation = mainApp.getCreateSettings().getWithAnnotation();
-        mainApp.getCreateSettings().setImageSize(sizeSpinner.getValue());
-        int size = mainApp.getCreateSettings().getImageSize();
+        Path inputFile = mainApp.getAppSettings().getInputFile();
+        Path outputDir = mainApp.getAppSettings().getOutputDirectory();
+        boolean withAnnotation = mainApp.getAppSettings().getWithAnnotation();
+        mainApp.getAppSettings().setImageSize(sizeSpinner.getValue());
+        int size = mainApp.getAppSettings().getImageSize();
 
         Task<List<Path>> createTask = new CreateTask(inputFile, outputDir, size, withAnnotation);
 

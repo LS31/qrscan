@@ -1,5 +1,7 @@
 package nl.ls31.qrscan.core;
 
+import nl.ls31.qrscan.model.SingleResult;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;

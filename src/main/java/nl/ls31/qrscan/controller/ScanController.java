@@ -1,14 +1,16 @@
-package nl.ls31.qrscan.ui.view;
+package nl.ls31.qrscan.controller;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
-import nl.ls31.qrscan.App;
+import nl.ls31.qrscan.MainApp;
 import nl.ls31.qrscan.core.RenameTask;
 import nl.ls31.qrscan.core.ScanTask;
-import nl.ls31.qrscan.core.SingleResult;
-import nl.ls31.qrscan.ui.model.ScanSettings;
+import nl.ls31.qrscan.model.AppSettings;
+import nl.ls31.qrscan.model.SingleResult;
+import nl.ls31.qrscan.view.ProgressDialog;
+import nl.ls31.qrscan.view.ResultsDialog;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -21,7 +23,7 @@ import java.util.List;
  */
 public class ScanController {
 
-    private App mainApp;
+    private MainApp mainApp;
     @FXML
     private TextField inputDirTextField;
     @FXML
@@ -50,7 +52,7 @@ public class ScanController {
      *
      * @param mainApp main application
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -58,14 +60,14 @@ public class ScanController {
      * Update all control states using the model as reference.
      */
     public void updateControlsByModel() {
-        inputDirTextField.setText(mainApp.getScanSettings().getInputDirectory().toAbsolutePath().toString());
-        targetDirTextField.setText(mainApp.getScanSettings().getTargetDirectory().toAbsolutePath().toString());
-        useFileAttributeCheckBox.setSelected(mainApp.getScanSettings().getUseFileAttributes());
-        writeFileAttributeCheckBox.setSelected(mainApp.getScanSettings().getWriteFileAttributes());
-        renameCheckBox.setSelected(mainApp.getScanSettings().getWithRenaming());
+        inputDirTextField.setText(mainApp.getAppSettings().getInputDirectory().toAbsolutePath().toString());
+        targetDirTextField.setText(mainApp.getAppSettings().getTargetDirectory().toAbsolutePath().toString());
+        useFileAttributeCheckBox.setSelected(mainApp.getAppSettings().getUseFileAttributes());
+        writeFileAttributeCheckBox.setSelected(mainApp.getAppSettings().getWriteFileAttributes());
+        renameCheckBox.setSelected(mainApp.getAppSettings().getWithRenaming());
         toggleRenaming();
-        openLogFileCheckBox.setSelected(mainApp.getScanSettings().getOpenLogFile());
-        qrPageSpinner.getValueFactory().setValue(mainApp.getScanSettings().getQRPage());
+        openLogFileCheckBox.setSelected(mainApp.getAppSettings().getOpenLogFile());
+        qrPageSpinner.getValueFactory().setValue(mainApp.getAppSettings().getQRPage());
     }
 
     /**
@@ -78,8 +80,8 @@ public class ScanController {
         File dir = dirChooser.showDialog(mainApp.getPrimaryStage());
         if (dir != null) {
             // Change the text field and update the model.
-            mainApp.getScanSettings().setInputDirectory(dir.toPath());
-            inputDirTextField.setText(mainApp.getScanSettings().getInputDirectory().toAbsolutePath().toString());
+            mainApp.getAppSettings().setInputDirectory(dir.toPath());
+            inputDirTextField.setText(mainApp.getAppSettings().getInputDirectory().toAbsolutePath().toString());
         }
     }
 
@@ -93,8 +95,8 @@ public class ScanController {
         File dir = dirChooser.showDialog(mainApp.getPrimaryStage());
         if (dir != null) {
             // Change the text field and update the model.
-            mainApp.getScanSettings().setTargetDirectory(dir.toPath());
-            targetDirTextField.setText(mainApp.getScanSettings().getTargetDirectory().toAbsolutePath().toString());
+            mainApp.getAppSettings().setTargetDirectory(dir.toPath());
+            targetDirTextField.setText(mainApp.getAppSettings().getTargetDirectory().toAbsolutePath().toString());
         }
     }
 
@@ -103,7 +105,7 @@ public class ScanController {
      */
     @FXML
     private void handleUseFileAttributeCheckBox() {
-        mainApp.getScanSettings().setUseFileAttributes(useFileAttributeCheckBox.isSelected());
+        mainApp.getAppSettings().setUseFileAttributes(useFileAttributeCheckBox.isSelected());
     }
 
     /**
@@ -112,7 +114,7 @@ public class ScanController {
      */
     @FXML
     private void handleWriteFileAttributeCheckBox() {
-        mainApp.getScanSettings().setWriteFileAttributes(writeFileAttributeCheckBox.isSelected());
+        mainApp.getAppSettings().setWriteFileAttributes(writeFileAttributeCheckBox.isSelected());
     }
 
     /**
@@ -120,7 +122,7 @@ public class ScanController {
      */
     @FXML
     private void handleOpenLogFileCheckBox() {
-        mainApp.getScanSettings().setOpenLogFile(openLogFileCheckBox.isSelected());
+        mainApp.getAppSettings().setOpenLogFile(openLogFileCheckBox.isSelected());
     }
 
     /**
@@ -128,7 +130,7 @@ public class ScanController {
      */
     @FXML
     private void handleRenameCheckBox() {
-        mainApp.getScanSettings().setWithRenaming(renameCheckBox.isSelected());
+        mainApp.getAppSettings().setWithRenaming(renameCheckBox.isSelected());
         toggleRenaming();
     }
 
@@ -152,20 +154,20 @@ public class ScanController {
      */
     @FXML
     private void handleScanButton() {
-        ScanSettings settings = mainApp.getScanSettings();
+        AppSettings appSettings = mainApp.getAppSettings();
 
         // Spinner has no nice listener, update value first.
-        settings.setQRPage(qrPageSpinner.getValue());
+        appSettings.setQRPage(qrPageSpinner.getValue());
 
-        Path inputDir = settings.getInputDirectory();
-        int qrPage = settings.getQRPage();
-        boolean useFileAttributes = settings.getUseFileAttributes();
-        boolean writeFileAttributes = settings.getWriteFileAttributes();
-        boolean openLogFile = settings.getOpenLogFile();
+        Path inputDir = appSettings.getInputDirectory();
+        int qrPage = appSettings.getQRPage();
+        boolean useFileAttributes = appSettings.getUseFileAttributes();
+        boolean writeFileAttributes = appSettings.getWriteFileAttributes();
+        boolean openLogFile = appSettings.getOpenLogFile();
 
         Task<List<SingleResult>> task;
-        if (settings.getWithRenaming()) {
-            Path targetDir = settings.getTargetDirectory();
+        if (appSettings.getWithRenaming()) {
+            Path targetDir = appSettings.getTargetDirectory();
             task = new RenameTask(inputDir, targetDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);
         } else {
             task = new ScanTask(inputDir, qrPage, useFileAttributes, writeFileAttributes, openLogFile);

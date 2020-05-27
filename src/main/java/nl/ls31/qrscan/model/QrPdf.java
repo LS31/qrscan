@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.core;
+package nl.ls31.qrscan.model;
 
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;

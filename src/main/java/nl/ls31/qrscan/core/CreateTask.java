@@ -2,6 +2,7 @@ package nl.ls31.qrscan.core;
 
 import com.google.zxing.WriterException;
 import javafx.concurrent.Task;
+import nl.ls31.qrscan.model.QrPdf;
 import org.tinylog.Logger;
 
 import java.io.IOException;

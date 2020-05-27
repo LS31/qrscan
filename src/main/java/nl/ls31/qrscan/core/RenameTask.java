@@ -1,5 +1,7 @@
 package nl.ls31.qrscan.core;
 
+import nl.ls31.qrscan.model.QrPdf;
+import nl.ls31.qrscan.model.SingleResult;
 import org.tinylog.Logger;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.ui.view;
+package nl.ls31.qrscan.view;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import nl.ls31.qrscan.core.SingleResult;
+import nl.ls31.qrscan.model.SingleResult;
 
 import java.util.List;
 
