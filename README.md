@@ -27,13 +27,14 @@ A big thanks to the following projects: [PDFBox by The Apache Software Foundatio
 * **1.0.0**
   * First release.
 * **2.0.0**
-  * Update to JDK/JRE 13; use Java Platform Module System.
+  * Update to JDK 13; use Java Platform Module System.
   * Minor changes in lay-out.
 * **2.1.0**
-  * Remember previous appSettings when restarting program.
+  * Remember previous settings when restarting program.
   * Added progress dialog windows.
   * Updated logging (and simplified for end user).
-  * Updated to JDK/JRE 14.
-  * Updated versions of all dependencies.
-* **2.1.2**
+  * Updated to JDK 14.
+  * Updated versions of dependencies.
+* **2.2.0**
+  * Show detailed results after scanning or renaming.
   * Updated versions of dependencies.
