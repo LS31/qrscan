@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.ui.view;
+package nl.ls31.qrscan.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -9,9 +9,9 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import nl.ls31.qrscan.App;
-import nl.ls31.qrscan.core.QrPdf;
-import nl.ls31.qrscan.ui.model.ManualTagSettings;
+import nl.ls31.qrscan.MainApp;
+import nl.ls31.qrscan.core.PdfScanner;
+import nl.ls31.qrscan.model.AppSettings;
 import org.tinylog.Logger;
 
 import java.io.File;
@@ -23,9 +23,9 @@ import java.io.IOException;
  *
  * @author Lars Steggink
  */
-public class ManualTagController {
+public class ManualTagPdfController {
 
-    private App mainApp;
+    private MainApp mainApp;
     @FXML
     private TextField pdfPathField;
     @FXML
@@ -41,7 +41,7 @@ public class ManualTagController {
     @FXML
     private void handleCodeFieldEdit() {
         String userInput = codeField.getText();
-        if (QrPdf.isValidQRCode(userInput)) {
+        if (PdfScanner.isValidQRCode(userInput)) {
             codeField.setStyle("-fx-border-color: green; -fx-border-width: 2px ;");
         } else {
             codeField.setStyle("-fx-border-color: red; -fx-border-width: 2px ;");
@@ -60,7 +60,7 @@ public class ManualTagController {
         if (file != null) {
             // Change the text field and update the model.
             pdfPathField.setText(file.toPath().toAbsolutePath().toString());
-            mainApp.getManualTagSettings().setPDFPath(file.toPath());
+            mainApp.getAppSettings().setManualPdf(file.toPath());
         }
     }
 
@@ -70,7 +70,7 @@ public class ManualTagController {
     @FXML
     private void handleTagButton() {
         try {
-            mainApp.getManualTagSettings().setCode(codeField.getText());
+            mainApp.getAppSettings().setManualCode(codeField.getText());
             tagFile();
         } catch (IllegalArgumentException e) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -86,7 +86,7 @@ public class ManualTagController {
      *
      * @param mainApp main application
      */
-    public void setMainApp(App mainApp) {
+    public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
@@ -94,12 +94,12 @@ public class ManualTagController {
      * Tags a PDF file according to the current settings in the settings model.
      */
     private void tagFile() {
-        ManualTagSettings settings = mainApp.getManualTagSettings();
-        QrPdf pdf = new QrPdf(settings.getPDFPath());
+        AppSettings settings = mainApp.getAppSettings();
+        PdfScanner pdf = new PdfScanner(settings.getManualPdf());
         try {
-            pdf.setQRCodeFileAttribute(settings.getCode());
-            String message = "Successfully tagged " + settings.getPDFPath().getFileName().toString() + " with code "
-                    + settings.getCode() + ". ";
+            pdf.setQRCodeFileAttribute(settings.getManualCode());
+            String message = "Successfully tagged " + settings.getManualPdf().getFileName().toString() + " with code "
+                    + settings.getManualCode() + ". ";
             Logger.info(message);
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Task finished.");
@@ -121,7 +121,7 @@ public class ManualTagController {
     }
 
     public void updateControlsByModel() {
-        pdfPathField.setText(mainApp.getManualTagSettings().getPDFPath().toAbsolutePath().toString());
-        codeField.setText(mainApp.getManualTagSettings().getCode());
+        pdfPathField.setText(mainApp.getAppSettings().getManualPdf().toAbsolutePath().toString());
+        codeField.setText(mainApp.getAppSettings().getManualCode());
     }
 }

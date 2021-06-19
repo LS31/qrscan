@@ -10,6 +10,6 @@ package nl.ls31.qrscan;
 public class Launcher {
 
     public static void main(String[] args) {
-        App.main(args);
+        MainApp.main(args);
     }
 }

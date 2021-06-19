@@ -22,13 +22,13 @@ import java.util.Set;
  *
  * @author Lars Steggink
  */
-public class CreateTask extends Task<List<Path>> {
+public class CreateImagesTask extends Task<List<Path>> {
 
     final static private String LSEP = System.lineSeparator();
-    private Path inputFile;
-    private Path outputDir;
-    private int size;
-    private boolean withText;
+    private final Path inputFile;
+    private final Path outputDir;
+    private final int size;
+    private final boolean withText;
 
     /**
      * This task imports creates GIF image files displaying QR codes (with or without an human-readable annotation).
@@ -39,7 +39,7 @@ public class CreateTask extends Task<List<Path>> {
      *                  annotation is requested.
      * @param withText  whether the code should be placed as regular text below the QR code
      */
-    public CreateTask(Path inputFile, Path outputDir, int size, boolean withText) {
+    public CreateImagesTask(Path inputFile, Path outputDir, int size, boolean withText) {
         this.inputFile = inputFile;
         this.outputDir = outputDir;
         this.size = size;
@@ -79,7 +79,7 @@ public class CreateTask extends Task<List<Path>> {
         List<Path> imageList = new ArrayList<>();
         for (String code : codeList) {
             updateProgress(++current, allCodes);
-            if (!QrPdf.isValidQRCode(code)) {
+            if (!PdfScanner.isValidQRCode(code)) {
                 Logger.warn("Skipped code " + code + " with illegal characters. ");
                 illegal++;
                 continue;
@@ -150,7 +150,7 @@ public class CreateTask extends Task<List<Path>> {
     private Path createImage(String code, Path outputDir)
             throws WriterException, IOException {
         Path imagePath = outputDir.resolve(code + ".gif");
-        QrImageWriter.writeGIF(imagePath, code, size, withText);
+        QrcodeImageWriter.writeGIF(imagePath, code, size, withText);
         return imagePath;
     }
 }

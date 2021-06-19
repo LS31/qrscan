@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="300.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="nl.ls31.qrscan.ui.view.CreateController">
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="nl.ls31.qrscan.controller.ManualTagPdfController">
     <BorderPane prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <center>
@@ -26,34 +26,26 @@
                     <RowConstraints/>
                     <RowConstraints/>
                 </rowConstraints>
-                <Label text="Code file:"/>
-                <Label text="Output directory:" GridPane.rowIndex="1"/>
-                <Button fx:id="inputFileButton" mnemonicParsing="false" onAction="#handleInputFileButton"
+                <Label text="PDF file: "/>
+                <Label text="Code: " GridPane.rowIndex="1"/>
+                <Button fx:id="pdfPathButton" mnemonicParsing="false" onAction="#handlePDFPathButton"
                         text="Select file..." GridPane.columnIndex="2"/>
-                <Button fx:id="outputDirButton" mnemonicParsing="false" onAction="#handleOutputDirButton"
-                        text="Select directory..." GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-                <TextField fx:id="inputFileTextField" editable="false" focusTraversable="false" GridPane.columnIndex="1"
+                <TextField fx:id="pdfPathField" editable="false" focusTraversable="false" GridPane.columnIndex="1"
                            GridPane.hgrow="ALWAYS"/>
-                <TextField fx:id="outputDirTextField" editable="false" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
+                <TextField fx:id="codeField" onKeyPressed="#handleCodeFieldEdit" onKeyReleased="#handleCodeFieldEdit"
+                           onKeyTyped="#handleCodeFieldEdit" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
                            GridPane.rowIndex="1"/>
-                <Button fx:id="createButton" mnemonicParsing="false" onAction="#handleCreateButton"
-                        text="Create image files" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <Button fx:id="tagButton" mnemonicParsing="false" onAction="#handleTagButton" text="Add file attribute"
+                        GridPane.columnIndex="2" GridPane.rowIndex="4">
                     <font>
                         <Font name="System Bold" size="12.0"/>
                     </font>
                 </Button>
-                <Label text="Annotation:" GridPane.rowIndex="2"/>
-                <Spinner fx:id="sizeSpinner" initialValue="50" max="100" min="1" GridPane.columnIndex="1"
-                         GridPane.rowIndex="3"/>
-                <Label text="Width (px):" GridPane.rowIndex="3"/>
-                <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" onAction="#handleAnnotationCheckBox"
-                          selected="true" text="Add the code as human-readable text below the QR code" wrapText="true"
-                          GridPane.columnIndex="1" GridPane.rowIndex="2"/>
             </GridPane>
         </center>
         <top>
             <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0"
-                  text="This feature creates GIF image files with QR codes. Provide a simple text file with the codes that should be converted to images. Put each code on a separate line."
+                  text="If a QR code is not automatically recognised, you can manually add a custom file attribute for a single file. Codes are limited to the following characters: A-Z, z-z, -, and _."
                   wrappingWidth="550.0" BorderPane.alignment="TOP_LEFT">
                 <font>
                     <Font name="System Italic" size="12.0"/>

@@ -6,11 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import nl.ls31.qrscan.ui.model.CreateSettings;
-import nl.ls31.qrscan.ui.model.ManualTagSettings;
-import nl.ls31.qrscan.ui.model.ScanSettings;
-import nl.ls31.qrscan.ui.view.RootController;
-import nl.ls31.qrscan.ui.view.ScanController;
+import nl.ls31.qrscan.controller.RootController;
+import nl.ls31.qrscan.controller.ScanPdfsController;
+import nl.ls31.qrscan.model.AppSettings;
 import org.tinylog.Logger;
 
 import java.io.IOException;
@@ -20,20 +18,16 @@ import java.io.IOException;
  *
  * @author Lars Steggink
  */
-public class App extends Application {
+public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private final ScanSettings scanSettings;
-    private final CreateSettings createSettings;
-    private final ManualTagSettings manualTagSettings;
+    private final AppSettings appSettings;
 
     /**
      * Main application.
      */
-    public App() {
-        this.scanSettings = new ScanSettings();
-        this.createSettings = new CreateSettings();
-        this.manualTagSettings = new ManualTagSettings();
+    public MainApp() {
+        this.appSettings = new AppSettings();
     }
 
     /**
@@ -46,21 +40,12 @@ public class App extends Application {
     }
 
     /**
-     * Gets the current create settings.
+     * Gets the current settings.
      *
-     * @return create settings
+     * @return current settings
      */
-    public CreateSettings getCreateSettings() {
-        return createSettings;
-    }
-
-    /**
-     * Gets the current manual tagging settings.
-     *
-     * @return manual tagging settings
-     */
-    public ManualTagSettings getManualTagSettings() {
-        return manualTagSettings;
+    public AppSettings getAppSettings() {
+        return appSettings;
     }
 
     /**
@@ -73,15 +58,6 @@ public class App extends Application {
     }
 
     /**
-     * Gets the current scan settings.
-     *
-     * @return scan settings
-     */
-    public ScanSettings getScanSettings() {
-        return scanSettings;
-    }
-
-    /**
      * Starts the main application.
      */
     @Override
@@ -90,8 +66,8 @@ public class App extends Application {
         this.primaryStage.setTitle("QRScan");
 
         // Load layouts from FXML file.
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/fxml/RootLayout.fxml"));
-        FXMLLoader scanViewLoader = new FXMLLoader(App.class.getResource("/fxml/ScanView.fxml"));
+        FXMLLoader loader = new FXMLLoader(MainApp.class.getResource("/fxml/RootLayout.fxml"));
+        FXMLLoader scanViewLoader = new FXMLLoader(MainApp.class.getResource("/fxml/ScanPdfsView.fxml"));
         try {
             rootLayout = loader.load();
         } catch (IOException e) {
@@ -109,8 +85,8 @@ public class App extends Application {
         } catch (IOException e) {
             Logger.error(e, "Scan layout not found.");
         }
-        ScanController scanController = scanViewLoader.getController();
-        scanController.setMainApp(this);
-        scanController.updateControlsByModel();
+        ScanPdfsController scanPdfsController = scanViewLoader.getController();
+        scanPdfsController.setMainApp(this);
+        scanPdfsController.updateControlsByModel();
     }
 }

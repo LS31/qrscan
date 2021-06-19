@@ -1,4 +1,4 @@
-package nl.ls31.qrscan.ui.view;
+package nl.ls31.qrscan.view;
 
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.geometry.Pos;
@@ -17,6 +17,12 @@ import javafx.stage.StageStyle;
 public class ProgressDialog {
     private final Stage dialogStage;
 
+    /**
+     * A simple dialog window with a progress bar.
+     *
+     * @param title                Title of the dialog
+     * @param taskProgressProperty Progress Property of the task that is monitored
+     */
     public ProgressDialog(String title, ReadOnlyDoubleProperty taskProgressProperty) {
         dialogStage = new Stage();
         dialogStage.initStyle(StageStyle.UTILITY);

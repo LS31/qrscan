@@ -2,6 +2,7 @@ package nl.ls31.qrscan.core;
 
 import com.google.zxing.NotFoundException;
 import javafx.concurrent.Task;
+import nl.ls31.qrscan.model.PdfScanResult;
 import org.tinylog.Logger;
 
 import java.awt.*;
@@ -25,13 +26,13 @@ import java.util.List;
  *
  * @author Lars Steggink
  */
-public class ScanTask extends Task<List<SingleResult>> {
+public class ScanPdfsTask extends Task<List<PdfScanResult>> {
     final static private String LSEP = System.lineSeparator();
-    protected Path inputDir;
-    private int qrCodePage;
-    private boolean writeFileAttributes;
-    private boolean useFileAttributes;
-    private boolean openLogFile;
+    protected final Path inputDir;
+    private final int qrCodePage;
+    private final boolean writeFileAttributes;
+    private final boolean useFileAttributes;
+    private final boolean openLogFile;
 
     /**
      * @param inputDir            Input directory with PDF files.
@@ -41,7 +42,7 @@ public class ScanTask extends Task<List<SingleResult>> {
      *                            scanning
      * @param openLogFile         whether to open the CSV log file at the end.
      */
-    public ScanTask(Path inputDir, int qrCodePage, boolean useFileAttributes, boolean writeFileAttributes, boolean openLogFile) {
+    public ScanPdfsTask(Path inputDir, int qrCodePage, boolean useFileAttributes, boolean writeFileAttributes, boolean openLogFile) {
         this.inputDir = inputDir;
         this.qrCodePage = qrCodePage;
         this.useFileAttributes = useFileAttributes;
@@ -53,20 +54,22 @@ public class ScanTask extends Task<List<SingleResult>> {
      * Iterates over every PDF file and tries to find the QR code.
      */
     @Override
-    protected List<SingleResult> call() {
-        List<QrPdf> pdfs = findInputFiles(inputDir);
-        List<SingleResult> results = scanInputFiles(pdfs);
+    protected List<PdfScanResult> call() {
+        List<PdfScanner> pdfs = findInputFiles(inputDir);
+        List<PdfScanResult> results = scanInputFiles(pdfs);
         logResults(results, inputDir);
         return results;
     }
 
     /**
      * Logs the results by logging to a CSV file.
+     * <p>
+     * TODO Move logging outside of task
      *
      * @param results Results from scanning.
      * @param dir     Directory to save CSV file into.
      */
-    protected void logResults(List<SingleResult> results, Path dir) {
+    protected void logResults(List<PdfScanResult> results, Path dir) {
         // Create a time stamp for the log file name, then log in that file.
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
         String timestamp = sdf.format(Calendar.getInstance().getTime());
@@ -88,15 +91,15 @@ public class ScanTask extends Task<List<SingleResult>> {
      * @param inputDir Path to directory.
      * @return List of PDF files (no guarantees regarding available QR codes).
      */
-    protected List<QrPdf> findInputFiles(Path inputDir) {
-        List<QrPdf> allFiles = new ArrayList<>();
+    protected List<PdfScanner> findInputFiles(Path inputDir) {
+        List<PdfScanner> allFiles = new ArrayList<>();
 
         SimpleFileVisitor<Path> pdfFileVisitor = new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult visitFile(Path filePath, BasicFileAttributes attrs) {
                 // Convert path to file
                 if (filePath.toString().toLowerCase().endsWith(".pdf")) {
-                    allFiles.add(new QrPdf(filePath));
+                    allFiles.add(new PdfScanner(filePath));
                 }
                 return FileVisitResult.CONTINUE;
             }
@@ -116,7 +119,7 @@ public class ScanTask extends Task<List<SingleResult>> {
      * @param inputFiles List of files to scan for QR codes.
      * @return Results from scanning the input files.
      */
-    protected List<SingleResult> scanInputFiles(List<QrPdf> inputFiles) {
+    protected List<PdfScanResult> scanInputFiles(List<PdfScanner> inputFiles) {
         int fileCount = inputFiles.size();
         int success = 0;
         int failed = 0;
@@ -125,23 +128,23 @@ public class ScanTask extends Task<List<SingleResult>> {
                 + "  Scanning page:   " + qrCodePage + LSEP + "  Number of files: " + fileCount);
 
         // Start the loop through all files.
-        List<SingleResult> results = new ArrayList<>();
-        for (QrPdf pdf : inputFiles) {
+        List<PdfScanResult> results = new ArrayList<>();
+        for (PdfScanner pdf : inputFiles) {
             updateProgress(++current, fileCount);
             Logger.info("Now scanning file " + pdf.getPath().getFileName() + ".");
 
             try {
                 String qrCode = pdf.getQRCode(qrCodePage, useFileAttributes, writeFileAttributes);
                 Logger.info("Found QR code " + qrCode + " in " + pdf.getPath().getFileName() + ".");
-                results.add(new SingleResult(pdf, SingleResult.ResultStatus.QR_CODE_FOUND, qrCodePage, qrCode));
+                results.add(new PdfScanResult(pdf, PdfScanResult.ResultStatus.QR_CODE_FOUND, qrCodePage, qrCode));
                 success++;
             } catch (IOException e) {
                 Logger.warn(e, "!Unable to access " + pdf.getPath().getFileName() + " or page not found.");
-                results.add(new SingleResult(pdf, SingleResult.ResultStatus.NO_FILE_ACCESS, qrCodePage, ""));
+                results.add(new PdfScanResult(pdf, PdfScanResult.ResultStatus.NO_FILE_ACCESS, qrCodePage, ""));
                 failed++;
             } catch (NotFoundException e) {
                 Logger.warn(e, "!Unable to find QR code at specified page in " + pdf.getPath().getFileName() + ".");
-                results.add(new SingleResult(pdf, SingleResult.ResultStatus.NO_QR_CODE, qrCodePage, ""));
+                results.add(new PdfScanResult(pdf, PdfScanResult.ResultStatus.NO_QR_CODE, qrCodePage, ""));
                 failed++;
             }
         }

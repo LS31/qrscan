@@ -22,7 +22,7 @@ import java.util.Hashtable;
  *
  * @author Lars Steggink
  */
-public class QrImageWriter {
+public class QrcodeImageWriter {
 
     /**
      * Write an image file containing a specified QR code and (optionally) a small annotation underneath.

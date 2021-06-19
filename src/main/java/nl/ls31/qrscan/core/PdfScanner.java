@@ -26,20 +26,20 @@ import java.util.Vector;
  *
  * @author Lars Steggink
  */
-public class QrPdf {
+public class PdfScanner {
     /**
      * This custom file attribute is used to add the QR code to the PDF file meta data.
      */
     final static public String FILE_ATTRIBUTE = "custom.qrcode";
-    private Path docPath;
-    private Map<Integer, String> qrCodeMap;
+    private final Path docPath;
+    private final Map<Integer, String> qrCodeMap;
 
     /**
      * PDF file containing a QR code.
      *
      * @param docPath Path of the document.
      */
-    public QrPdf(Path docPath) {
+    public PdfScanner(Path docPath) {
         this.docPath = docPath;
         this.qrCodeMap = new HashMap<>();
     }
@@ -197,7 +197,7 @@ public class QrPdf {
         view.read(FILE_ATTRIBUTE, buf);
         buf.flip();
         String value = Charset.defaultCharset().decode(buf).toString();
-        if (QrPdf.isValidQRCode(value)) {
+        if (PdfScanner.isValidQRCode(value)) {
             return value;
         } else {
             throw new IOException("Invalid QR code in file attribute.");
@@ -212,7 +212,7 @@ public class QrPdf {
      * @throws IllegalArgumentException if code contain illegal characters
      */
     public void setQRCodeFileAttribute(String code) throws IOException, IllegalArgumentException {
-        if (!QrPdf.isValidQRCode(code)) {
+        if (!PdfScanner.isValidQRCode(code)) {
             throw new IllegalArgumentException("Illegal characters in QR code.");
         } else {
             UserDefinedFileAttributeView view = Files.getFileAttributeView(docPath, UserDefinedFileAttributeView.class);

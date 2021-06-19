@@ -8,6 +8,7 @@ module qrscan {
     requires org.tinylog.api;
     requires java.prefs;
 
-    opens nl.ls31.qrscan.ui.view to javafx.fxml;
+    opens nl.ls31.qrscan.controller to javafx.fxml;
+    opens nl.ls31.qrscan.model to javafx.base;
     exports nl.ls31.qrscan;
 }
