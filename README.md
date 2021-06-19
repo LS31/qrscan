@@ -38,3 +38,5 @@ A big thanks to the following projects: [PDFBox by The Apache Software Foundatio
 * **2.2.0**
   * Show detailed results after scanning or renaming.
   * Updated versions of dependencies.
+* **2.2.1**
+  * 
