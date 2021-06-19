@@ -19,7 +19,9 @@ Good QR code recognition has been attained with documents that were scanned at a
 The [provided executable JAR](https://github.com/LS31/qrscan/releases) is ready to use. The current version runs with Java 14. You need to have a recent Java Virtual Machine ([Java Runtime Environment](https://java.com/en/download/)) installed to execute the JAR file. On Windows, simply double-click the JAR file to execute. 
 
 # Acknowledgements
-A big thanks to the following projects: [PDFBox by The Apache Software Foundation](https://pdfbox.apache.org/), [Java Advanced Imaging Image I/O Tools API](https://github.com/jai-imageio/jai-imageio-jpeg2000), and the [ZXing project](https://github.com/zxing).
+A big thanks to the following projects: [PDFBox by The Apache Software Foundation](https://pdfbox.apache.org/)
+, [Java Advanced Imaging Image I/O Tools API](https://github.com/jai-imageio/jai-imageio-jpeg2000)
+, [TwelveMonkeys ImageIO](https://haraldk.github.io/TwelveMonkeys/), and the [ZXing project](https://github.com/zxing).
 
 # Release history
 * **1.0.0**
@@ -33,3 +35,5 @@ A big thanks to the following projects: [PDFBox by The Apache Software Foundatio
   * Updated logging (and simplified for end user).
   * Updated to JDK/JRE 14.
   * Updated versions of all dependencies.
+* **2.1.2**
+  * Updated versions of dependencies.
