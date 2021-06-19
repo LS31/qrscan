@@ -43,8 +43,8 @@
                     </font>
                 </Button>
                 <Label text="Annotation:" GridPane.rowIndex="2"/>
-                <Spinner fx:id="sizeSpinner" initialValue="50" max="100" min="1" GridPane.columnIndex="1"
-                         GridPane.rowIndex="3"/>
+                <Spinner fx:id="sizeSpinner" editable="true" initialValue="50" max="100" min="1"
+                         GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                 <Label text="Width (px):" GridPane.rowIndex="3"/>
                 <CheckBox fx:id="annotationCheckBox" mnemonicParsing="false" onAction="#handleAnnotationCheckBox"
                           selected="true" text="Add the code as human-readable text below the QR code" wrapText="true"
