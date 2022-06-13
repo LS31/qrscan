@@ -1,4 +1,5 @@
 module qrscan {
+    requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.zxing;
@@ -10,5 +11,4 @@ module qrscan {
 
     opens nl.ls31.qrscan.controller to javafx.fxml;
     opens nl.ls31.qrscan.model to javafx.base;
-    exports nl.ls31.qrscan;
 }

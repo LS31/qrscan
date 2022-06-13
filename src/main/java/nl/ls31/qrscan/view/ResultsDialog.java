@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nl.ls31.qrscan.model.PdfScanResult;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -61,7 +62,7 @@ public class ResultsDialog {
         renamedPathCol.setSortType(TableColumn.SortType.DESCENDING);
 
         table.setItems(resultList);
-        table.getColumns().addAll(inputPathCol, renamedPathCol, qrCodeStatusCol, qrCodeCol);
+        table.getColumns().addAll(Arrays.asList(inputPathCol, renamedPathCol, qrCodeStatusCol, qrCodeCol));
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
